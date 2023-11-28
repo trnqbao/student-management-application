@@ -27,6 +27,7 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
         connect();
+
     }
 
     /**
@@ -163,7 +164,9 @@ public class login extends javax.swing.JFrame {
             if (rs.next()) {
                 int id = rs.getInt("id");
                 this.setVisible(false);
-                new Main(id, username).setVisible(true);
+                user user = new user();
+                user.setTitle("User Management");
+                user.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Username or Password do not match");
                 txtUsername.setText("");

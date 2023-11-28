@@ -335,26 +335,32 @@ public class user extends javax.swing.JFrame {
             int age = Integer.parseInt(txtAge.getText());
             String status = txtStatus.getSelectedItem().toString();
             String role = txtRole.getSelectedItem().toString();
+
+            if (name == "") {
+                JOptionPane.showMessageDialog(this, "Check again with your information");
+            } else {
+                pst = con.prepareStatement("update user set name=?, phone=?, age=?,status=?,role=? where id=?");
+                pst.setString(1, name);
+                pst.setString(2, phone);
+                pst.setInt(3, age);
+                pst.setString(4, status);
+                pst.setString(5, role);
+                pst.setInt(6, id);
+
+                pst.executeUpdate();
+
+                JOptionPane.showMessageDialog(this, role + " Updated");
+
+                btnSave.setEnabled(true);
+                txtName.setText("");
+                txtPhone.setText("");
+                txtAge.setText("");
+                txtStatus.setSelectedIndex(-1);
+                txtRole.setSelectedIndex(-1);
+                getUsers();
+            }
             
-            pst = con.prepareStatement("update user set name=?, phone=?, age=?,status=?,role=? where id=?");
-            pst.setString(1, name);
-            pst.setString(2, phone);
-            pst.setInt(3, age);
-            pst.setString(4, status);
-            pst.setString(5, role);
-            pst.setInt(6, id);
- 
-            pst.executeUpdate();
-            
-            JOptionPane.showMessageDialog(this, role + " Updated");
-            
-            btnSave.setEnabled(true);
-            txtName.setText("");
-            txtPhone.setText("");
-            txtAge.setText("");
-            txtStatus.setSelectedIndex(-1);
-            txtRole.setSelectedIndex(-1);
-            getUsers();
+
             
             
         } catch (SQLException ex) {
@@ -405,55 +411,7 @@ public class user extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(user.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(user.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(user.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(user.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                user user = new user();
-                user.setTitle("User Management");
-                user.setVisible(true);
-                
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
