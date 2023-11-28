@@ -147,7 +147,7 @@ public class login extends javax.swing.JFrame {
                 Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -160,14 +160,21 @@ public class login extends javax.swing.JFrame {
             pst.setString(1, username);
             pst.setString(2, password);
             rs = pst.executeQuery();
-            
+
+
             if (rs.next()) {
                 int id = rs.getInt("id");
-                this.setVisible(false);
-                user user = new user();
-                user.setTitle("User Management");
-                user.setVisible(true);
-            } else {
+                String role = rs.getString("role");
+
+                if (role.equals("Admin")) {
+                    this.setVisible(false);
+                    user user = new user();
+                    user.setTitle("User Management");
+                    user.setVisible(true);
+                }
+
+
+            } else if (rs==null) {
                 JOptionPane.showMessageDialog(this, "Username or Password do not match");
                 txtUsername.setText("");
                 txtPassword.setText("");

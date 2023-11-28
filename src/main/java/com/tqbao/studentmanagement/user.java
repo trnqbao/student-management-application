@@ -6,6 +6,7 @@
 package com.tqbao.studentmanagement;
 
 import java.sql.*;
+import java.util.Objects;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,8 @@ public class user extends javax.swing.JFrame {
         initComponents();
         connect();
         getUsers();
+        btnDelete.setEnabled(false);
+        btnUpdate.setEnabled(false);
     }
     
     Connection con;
@@ -321,6 +324,8 @@ public class user extends javax.swing.JFrame {
         txtStatus.setSelectedItem(status);
         txtRole.setSelectedItem(role);
         btnSave.setEnabled(false);
+        btnDelete.setEnabled(true);
+        btnUpdate.setEnabled(true);
     }//GEN-LAST:event_list_usersMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -352,6 +357,8 @@ public class user extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, role + " Updated");
 
                 btnSave.setEnabled(true);
+                btnDelete.setEnabled(false);
+                btnUpdate.setEnabled(false);
                 txtName.setText("");
                 txtPhone.setText("");
                 txtAge.setText("");
@@ -375,30 +382,26 @@ public class user extends javax.swing.JFrame {
             int selectIndex = list_users.getSelectedRow();
             
             int id = (int) dtm.getValueAt(selectIndex, 0);
-            String name = txtName.getText();
-            String phone = txtPhone.getText();
-            int age = Integer.parseInt(txtAge.getText());
-            String status = txtStatus.getSelectedItem().toString();
-            String role = txtRole.getSelectedItem().toString();
+            String role = Objects.requireNonNull(txtRole.getSelectedItem()).toString();
             
             System.out.println(String.valueOf(id));
-            if (String.valueOf(id).isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please choose user to delete");
-            } else {
+
                 pst = con.prepareStatement("delete from user where id=?"); 
                 pst.setInt(1, id);
                 pst.executeUpdate();
 
-                JOptionPane.showMessageDialog(this, role + " has been updated");
+                JOptionPane.showMessageDialog(this, role + " has been deleted");
 
                 btnSave.setEnabled(true);
+                btnDelete.setEnabled(false);
+                btnUpdate.setEnabled(false);
                 txtName.setText("");
                 txtPhone.setText("");
                 txtAge.setText("");
                 txtStatus.setSelectedIndex(-1);
                 txtRole.setSelectedIndex(-1);
                 getUsers();
-            }
+
 
             
             
