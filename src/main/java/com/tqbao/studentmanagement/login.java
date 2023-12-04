@@ -144,9 +144,9 @@ public class login extends javax.swing.JFrame {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost/studentmanagement", "root", "");
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(admin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
-                Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(admin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     
@@ -168,13 +168,15 @@ public class login extends javax.swing.JFrame {
 
                 if (role.equals("Admin")) {
                     this.setVisible(false);
-                    user user = new user();
+                    admin user = new admin();
                     user.setTitle("User Management");
                     user.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not as admin role!");
                 }
 
 
-            } else if (rs==null) {
+            } else  {
                 JOptionPane.showMessageDialog(this, "Username or Password do not match");
                 txtUsername.setText("");
                 txtPassword.setText("");
@@ -209,6 +211,9 @@ public class login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
