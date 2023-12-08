@@ -5,6 +5,11 @@
  */
 package com.tqbao.studentmanagement.View;
 
+import com.tqbao.studentmanagement.View.StudentManagement.student;
+import com.tqbao.studentmanagement.View.AccountManagement.profile;
+import com.tqbao.studentmanagement.View.AccountManagement.login;
+import com.tqbao.studentmanagement.Controller.UserController;
+
 import java.awt.Color;
 import java.sql.*;
 import java.util.logging.Level;
@@ -22,7 +27,7 @@ public class manager extends javax.swing.JFrame {
     /**
      * Creates new form user
      */
-    
+    UserController userController = new UserController();
     Color DefauColor, ClickColor;
     public manager() throws SQLException {
         initComponents();
@@ -31,26 +36,14 @@ public class manager extends javax.swing.JFrame {
 //        title_role.setText(role);
         DefauColor = new Color(13,36,51);
         ClickColor = new Color(100,100,100);
-        connect();
+
         
     }
-    
-    Connection con;
-    PreparedStatement pst;
-    
+
     DefaultTableModel dtm;
    
     
-    public void connect() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/studentmanagement", "root", "");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(manager.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    }
+
     
     
    

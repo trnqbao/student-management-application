@@ -5,6 +5,8 @@
  */
 package com.tqbao.studentmanagement.View;
 
+import com.tqbao.studentmanagement.View.AccountManagement.profile;
+import com.tqbao.studentmanagement.View.AccountManagement.login;
 import java.awt.Color;
 import java.sql.*;
 import java.util.logging.Level;
@@ -34,31 +36,19 @@ public class employee extends javax.swing.JFrame {
         menu4.setBackground(ClickColor);
         profile prf = new profile();
             
-            jDesktopPane.removeAll();
-            jDesktopPane.add(prf).setVisible(true);
-        connect();
+        jDesktopPane.removeAll();
+        jDesktopPane.add(prf).setVisible(true);
+
         
     }
     
-    Connection con;
-    PreparedStatement pst;
+
+
     
     DefaultTableModel dtm;
    
-    
-    public void connect() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/studentmanagement", "root", "");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(employee.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(employee.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    }
-    
-    
-   
+
+
     
 
     /**

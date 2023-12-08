@@ -16,12 +16,14 @@ public class UserController  {
         userDAO.add(user);
     }
 
-    public ResultSet getAllUsers() {
-        return userDAO.getAll();
+    public List<User> getAllUsers() {
+        return userDAO.readAll();
     }
-
-    public User getUser(String a, String b) {
-        return userDAO.check(a, b);
+    public User getUser(int id) {
+        return userDAO.read(id);
+    }
+    public User getUser(String user, String pass) {
+        return userDAO.check(user, pass);
     }
 
     public void updateUser(User user) {
@@ -31,4 +33,6 @@ public class UserController  {
     public void deleteUser(int id) {
         userDAO.delete(id);
     }
+
+    public void updatePassword(int id, String password) {userDAO.updatePassword(id, password);}
 }

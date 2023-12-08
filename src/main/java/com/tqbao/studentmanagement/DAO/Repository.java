@@ -15,7 +15,7 @@ public interface Repository <T, K>{
     List<T> readAll();
     T read(K id);
 
-    User check(String username, String password);
+
 
     boolean update(T item);
     boolean delete(K id);

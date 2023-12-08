@@ -1,16 +1,18 @@
 package com.tqbao.studentmanagement.Model;
 
+import java.sql.Date;
+
 public class Student {
     private int id;
     private String name;
-    private String birthday;
+    private Date birthday;
     private String gender;
     private String phone;
     private String address;
     private String grade;
     private String certificate;
 
-    public Student(int id, String name, String birthday, String gender, String phone, String address, String grade, String certificate) {
+    public Student(int id, String name, Date birthday, String gender, String phone, String address, String grade, String certificate) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -21,7 +23,7 @@ public class Student {
         this.certificate = certificate;
     }
 
-    public Student(String name, String birthday, String gender, String phone, String address, String grade, String certificate) {
+    public Student(String name, Date birthday, String gender, String phone, String address, String grade, String certificate) {
         this.name = name;
         this.birthday = birthday;
         this.gender = gender;
@@ -31,7 +33,7 @@ public class Student {
         this.certificate = certificate;
     }
 
-    public Student(String name, String birthday, String gender, String phone, String address, String grade) {
+    public Student(String name, Date birthday, String gender, String phone, String address, String grade) {
         this.name = name;
         this.birthday = birthday;
         this.gender = gender;
@@ -60,11 +62,11 @@ public class Student {
         this.name = name;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
