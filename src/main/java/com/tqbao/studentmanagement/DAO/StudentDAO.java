@@ -1,10 +1,16 @@
 package com.tqbao.studentmanagement.DAO;
 
 import com.tqbao.studentmanagement.Model.Student;
+import com.tqbao.studentmanagement.View.AccountManagement.dashboard;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StudentDAO implements Repository<Student, Integer> {
 
@@ -13,6 +19,7 @@ public class StudentDAO implements Repository<Student, Integer> {
     private static final String INSERT_STUDENT = "insert into student(name, birthday, gender, phone, address, grade, certificate) values(?,?,?,?,?,?,?)";
     private static final String UPDATE_STUDENT = "update student set name=?, birthday=?, gender=?, phone=?, address=?, grade=?, certificate=? where id=?";
     private static final String DELETE_STUDENT = "delete from student where id=?";
+    private static final String SORT_BY_GRADE_ASC = "select * from student order by grade";
     private static final String CREATE_TABLE_STUDENT = "CREATE TABLE IF NOT EXISTS student("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "name VARCHAR(255) NOT NULL,"
@@ -55,7 +62,7 @@ public class StudentDAO implements Repository<Student, Integer> {
             int row = pstm.executeUpdate();
 
             if (row == 1) {
-                System.out.println("Student was added successfully");
+                System.out.println("Student has been added");
             }
             conn.close();
             pstm.close();
@@ -92,6 +99,37 @@ public class StudentDAO implements Repository<Student, Integer> {
             return students;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void showStudents(JTable jTable, DefaultTableModel dtm) {
+        int c;
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(GET_ALL_STUDENTS);
+            ResultSet rs = pstm.executeQuery();
+
+            ResultSetMetaData rsd = rs.getMetaData();
+            c = rsd.getColumnCount();
+            dtm = (DefaultTableModel) jTable.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector vector = new Vector();
+                for (int i = 0; i < c; i++) {
+                    vector.add(rs.getInt("id"));
+                    vector.add(rs.getString("name"));
+                    vector.add(rs.getDate("birthday"));
+                    vector.add(rs.getString("gender"));
+                    vector.add(rs.getString("phone"));
+                    vector.add(rs.getString("address"));
+                    vector.add(rs.getString("grade"));
+                    vector.add(rs.getString("certificate"));
+                }
+                dtm.addRow(vector);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -141,7 +179,7 @@ public class StudentDAO implements Repository<Student, Integer> {
             int updated_row = pstm.executeUpdate();
 
             if (updated_row > 0) {
-                System.out.println("Student has been updated successfully");
+                System.out.println("Student has been updated");
                 return true;
             }
             conn.close();
@@ -159,7 +197,7 @@ public class StudentDAO implements Repository<Student, Integer> {
             pstm.setInt(1, id);
             int row = pstm.executeUpdate();
             if (row > 0) {
-                System.out.println("Deleted Student successfully");
+                System.out.println("Student has been deleted");
                 return true;
             }
             conn.close();
@@ -167,6 +205,37 @@ public class StudentDAO implements Repository<Student, Integer> {
             return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void sortASCByGrade(JTable jTable, DefaultTableModel dtm) {
+        int c;
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(SORT_BY_GRADE_ASC);
+            ResultSet rs = pstm.executeQuery();
+
+            ResultSetMetaData rsd = rs.getMetaData();
+            c = rsd.getColumnCount();
+            dtm = (DefaultTableModel) jTable.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector vector = new Vector();
+                for (int i = 0; i < c; i++) {
+                    vector.add(rs.getInt("id"));
+                    vector.add(rs.getString("name"));
+                    vector.add(rs.getDate("birthday"));
+                    vector.add(rs.getString("gender"));
+                    vector.add(rs.getString("phone"));
+                    vector.add(rs.getString("address"));
+                    vector.add(rs.getString("grade"));
+                    vector.add(rs.getString("certificate"));
+                }
+                dtm.addRow(vector);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

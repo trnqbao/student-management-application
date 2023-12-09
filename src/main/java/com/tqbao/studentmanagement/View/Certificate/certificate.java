@@ -42,31 +42,8 @@ public class certificate extends javax.swing.JInternalFrame {
     DefaultTableModel dtm;
     CertificateController certificateController = new CertificateController();
 
-    public void getCertificates() {
-        int c;
-        try (Connection conn = ConnectionDB.getConnection()) {
-            PreparedStatement pstm = conn.prepareStatement("select * from certificate");
-            ResultSet rs = pstm.executeQuery();
-
-
-
-            ResultSetMetaData rsd = rs.getMetaData();
-            c = rsd.getColumnCount();
-            dtm = (DefaultTableModel) listCertificates.getModel();
-            dtm.setRowCount(0);
-
-            while (rs.next()) {
-                Vector vector = new Vector();
-                for (int i = 0; i < c; i++) {
-                    vector.add(rs.getInt("id"));
-                    vector.add(rs.getString("name"));
-                }
-                dtm.addRow(vector);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void getCertificates() {
+        certificateController.showCertificates(listCertificates, dtm);
     }
 
     /**
@@ -375,9 +352,7 @@ public class certificate extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dtm = (DefaultTableModel) listCertificates.getModel();
         int selectIndex = listCertificates.getSelectedRow();
-        int id = (int) dtm.getValueAt(selectIndex, 0);
         String name = dtm.getValueAt(selectIndex, 1).toString();
-
         txtName.setText(name);
         btnAdd.setEnabled(false);
         btnUpdate.setEnabled(true);

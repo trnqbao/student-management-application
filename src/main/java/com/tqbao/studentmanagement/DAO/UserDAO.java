@@ -6,10 +6,18 @@
 package com.tqbao.studentmanagement.DAO;
 
 import com.tqbao.studentmanagement.Model.User;
+import com.tqbao.studentmanagement.View.AccountManagement.dashboard;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -17,11 +25,18 @@ import java.util.List;
  * @author tqbao
  */
 public class UserDAO implements Repository<User, Integer> {
-	private static final String GET_ALL_USER = "select id, name, phone, age, status, role from user";
+	private static final String GET_ADMIN = "select id, name, phone, age, status, role, loginhistory from user where role = \"Admin\"";
+	private static final String GET_MANAGER = "select id, name, phone, age, status, role, loginhistory from user where role = \"Manager\"";
+	private static final String GET_EMPLOYEE = "select id, name, phone, age, status, role, loginhistory from user where role = \"Employee\"";
+	private static final String GET_NORMAL_USERS = "select id, name, phone, age, status, role, loginhistory from user where status = \"Normal\"";
+	private static final String GET_LOCKED_USERS = "select id, name, phone, age, status, role, loginhistory from user where status = \"Locked\"";
+	private static final String GET_ALL_USER = "select id, name, phone, age, status, role, loginhistory from user";
 	private static final String SELECT_USER = "select * from user where id=?";
 	private static final String INSERT_USER = "insert into user(name, age, phone, status, role, username, password) values(?,?,?,?,?,?,?)";
 	private static final String UPDATE_USER = "update user set name=?, phone=?, age=?,status=?,role=? where id=?";
 	private static final String UPDATE_PASSWORD = "update user set password=? where id=?";
+
+	private static final String UPDATE_LOGIN_HISTORY = "update user set loginhistory=? where id=?";
 	private static final String DELETE_USER = "delete from user where id=?";
 
 	private static final String USE_DB_SQL = "use 521H0494_javaswing";
@@ -34,7 +49,8 @@ public class UserDAO implements Repository<User, Integer> {
 													+ "status VARCHAR(255) NOT NULL,"
 													+ "role VARCHAR(255) NOT NULL,"
 													+ "username VARCHAR(255) NOT NULL,"
-													+ "password VARCHAR(255) NOT NULL)";
+													+ "password VARCHAR(255) NOT NULL,"
+													+ "loginhistory VARCHAR(255))";
 
 
 	private static final String DELETE_USER_ADMIN_IF_EXISTS = "delete from user where id = 1";
@@ -50,7 +66,6 @@ public class UserDAO implements Repository<User, Integer> {
 		try (Connection conn = ConnectionDB.getConnection()) {
 			Statement stm = (Statement) conn.createStatement();
 			stm.executeUpdate(CREATE_DB_SQL);
-			System.out.println("Database created successfully...");
 			conn.close();
 			stm.close();
 		} catch (SQLException e) {
@@ -88,7 +103,7 @@ public class UserDAO implements Repository<User, Integer> {
 			int row = pstm.executeUpdate();
 
 			if (row == 1) {
-				System.out.println(user.getRole() + " was added successfully");
+				System.out.println(user.getRole() + " has been added");
 			}
 			conn.close();
 			pstm.close();
@@ -126,19 +141,28 @@ public class UserDAO implements Repository<User, Integer> {
 		}
 	}
 
-	public ResultSet getAll() {
-		try (Connection conn = ConnectionDB.getConnection()) {
-			Statement stm = (Statement) conn.createStatement();
-			ResultSet rs = stm.executeQuery(GET_ALL_USER);
+	public void showAllUsers(JTable jTable, DefaultTableModel dtm) {
+		showUsers(jTable, dtm, GET_ALL_USER);
+	}
 
+	public void showAdmin(JTable jTable, DefaultTableModel dtm) {
+		showUsers(jTable, dtm, GET_ADMIN);
+	}
 
-			conn.close();
-			stm.close();
-			rs.close();
-			return rs;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+	public void showManager(JTable jTable, DefaultTableModel dtm) {
+		showUsers(jTable, dtm, GET_MANAGER);
+	}
+
+	public void showEmployee(JTable jTable, DefaultTableModel dtm) {
+		showUsers(jTable, dtm, GET_EMPLOYEE);
+	}
+
+	public void showNormalUser(JTable jTable, DefaultTableModel dtm) {
+		showUsers(jTable, dtm, GET_NORMAL_USERS);
+	}
+
+	public void showLockedUser(JTable jTable, DefaultTableModel dtm) {
+		showUsers(jTable, dtm, GET_LOCKED_USERS);
 	}
 	@Override
 	public User read(Integer id) {
@@ -155,8 +179,9 @@ public class UserDAO implements Repository<User, Integer> {
 				String role = rs.getString(6);
 				String username = rs.getString(7);
 				String password = rs.getString(8);
+				String loginHitory = rs.getString(9);
 
-				User user = new User(id, name, age, phone, status, role, username, password);
+				User user = new User(id, name, age, phone, status, role, username, password, loginHitory);
 				pstm.close();
 				rs.close();
 				return user;
@@ -182,10 +207,14 @@ public class UserDAO implements Repository<User, Integer> {
 				String phone = rs.getString(4);
 				String status = rs.getString(5);
 				String role = rs.getString(6);
-				user = new User(id, name, age, phone, status, role, username, password);
+
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				Date date = new Date();
+				String history = dateFormat.format(date);
+//				System.out.println("History: " + history);
+				user = new User(id, name, age, phone, status, role, username, password, history);
 			}
 
-//            System.out.println(user.toString());
 			conn.close();
 			pstm.close();
 			rs.close();
@@ -210,10 +239,9 @@ public class UserDAO implements Repository<User, Integer> {
 			int updated_row = pstm.executeUpdate();
 
 			if (updated_row > 0) {
-				System.out.println(user.getRole() + " has been updated successfully");
+				System.out.println(user.getRole() + " has been updated");
 				return true;
 			}
-			System.out.println(user.getRole() + " was not exist");
 			conn.close();
 			pstm.close();
 			return false;
@@ -229,7 +257,7 @@ public class UserDAO implements Repository<User, Integer> {
 			pstm.setInt(1, id);
 			int row = pstm.executeUpdate();
 			if (row > 0) {
-				System.out.println("Deleted successfully");
+				System.out.println("User has been successfully");
 				return true;
 			}
 			conn.close();
@@ -248,7 +276,7 @@ public class UserDAO implements Repository<User, Integer> {
 			int updated_row = pstm.executeUpdate();
 
 			if (updated_row > 0) {
-				System.out.println("Password has been updated successfully");
+				System.out.println("Password has been updated");
 				return true;
 			}
 
@@ -260,4 +288,57 @@ public class UserDAO implements Repository<User, Integer> {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public boolean updateLoginHistory(User user) {
+		try (Connection conn = ConnectionDB.getConnection()) {
+			PreparedStatement pstm = (PreparedStatement) conn.prepareStatement(UPDATE_LOGIN_HISTORY);
+			pstm.setString(1, user.getLoginHistory());
+			pstm.setInt(2, user.getId());
+
+			int updated_row = pstm.executeUpdate();
+
+			if (updated_row > 0) {
+				System.out.println("Login history has been updated");
+			}
+
+			conn.close();
+			pstm.close();
+			return false;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void showUsers(JTable jTable, DefaultTableModel dtm, String sql) {
+		int c;
+		try (Connection conn = ConnectionDB.getConnection()) {
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+
+			ResultSetMetaData rsd = rs.getMetaData();
+			c = rsd.getColumnCount();
+			dtm = (DefaultTableModel) jTable.getModel();
+			dtm.setRowCount(0);
+
+			while (rs.next()) {
+				Vector vector = new Vector();
+				for (int i = 0; i < c; i++) {
+					vector.add(rs.getInt("id"));
+					vector.add(rs.getString("name"));
+					vector.add(rs.getString("phone"));
+					vector.add(rs.getInt("age"));
+					vector.add(rs.getString("status"));
+					vector.add(rs.getString("role"));
+					vector.add(rs.getString("loginhistory"));
+				}
+				dtm.addRow(vector);
+			}
+
+		} catch (SQLException ex) {
+			Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+
+
 }

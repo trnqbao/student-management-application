@@ -3,6 +3,9 @@ package com.tqbao.studentmanagement.Controller;
 import com.tqbao.studentmanagement.DAO.CertificateDAO;
 import com.tqbao.studentmanagement.Model.Certificate;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
 import java.util.List;
 
 public class CertificateController {
@@ -22,6 +25,9 @@ public class CertificateController {
     public List<Certificate> getAll() {
         return certificateDAO.readAll();
     }
+    public ResultSet getAll(JComboBox jComboBox) {
+        return certificateDAO.getAll(jComboBox);
+    }
 
     public void update(Certificate certificate) {
         certificateDAO.update(certificate);
@@ -29,5 +35,9 @@ public class CertificateController {
 
     public void delete(int id) {
         certificateDAO.delete(id);
+    }
+
+    public void showCertificates(JTable listCertificates, DefaultTableModel dtm) {
+        certificateDAO.showCertificates(listCertificates, dtm);
     }
 }

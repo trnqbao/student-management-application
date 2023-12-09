@@ -5,6 +5,7 @@
  */
 package com.tqbao.studentmanagement.View.StudentManagement;
 
+import com.tqbao.studentmanagement.Controller.CertificateController;
 import com.tqbao.studentmanagement.Controller.StudentController;
 import com.tqbao.studentmanagement.DAO.ConnectionDB;
 import com.tqbao.studentmanagement.Model.Student;
@@ -19,8 +20,7 @@ import java.util.Objects;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static com.tqbao.studentmanagement.View.AccountManagement.login.user;
+import static com.tqbao.studentmanagement.DAO.CertificateDAO.GET_ALL_CERTIFICATE;
 
 /**
  *
@@ -36,43 +36,23 @@ public class student extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
+        updateCertificateCombobox();
         getStudents();
+
         btnDelete.setEnabled(false);
         btnUpdate.setEnabled(false);
     }
 
     DefaultTableModel dtm;
     StudentController studentController = new StudentController();
+    CertificateController certificateController = new CertificateController();
+    
+    private void updateCertificateCombobox() {
+        certificateController.getAll(txtCertificate1);
+    }
 
     private void getStudents() {
-        int c;
-        try (Connection conn = ConnectionDB.getConnection()) {
-            PreparedStatement pstm = conn.prepareStatement("select * from student");
-            ResultSet rs = pstm.executeQuery();
-            
-            ResultSetMetaData rsd = rs.getMetaData();
-            c = rsd.getColumnCount();
-            dtm = (DefaultTableModel) listStudent.getModel();
-            dtm.setRowCount(0);
-
-            while (rs.next()) {
-                Vector vector = new Vector();
-                for (int i = 0; i < c; i++) {
-                    vector.add(rs.getInt("id"));
-                    vector.add(rs.getString("name"));
-                    vector.add(rs.getDate("birthday"));
-                    vector.add(rs.getString("gender"));
-                    vector.add(rs.getString("phone"));
-                    vector.add(rs.getString("address"));
-                    vector.add(rs.getString("grade"));
-                    vector.add(rs.getString("certificate"));
-                }
-                dtm.addRow(vector);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        studentController.showStudents(listStudent, dtm);
     }
 
     private java.sql.Date convertToSqlDate(Object obj) {
@@ -98,6 +78,8 @@ public class student extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listStudent = new javax.swing.JTable();
+        jPanel26 = new javax.swing.JPanel();
+        btnSortASCByGrade = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -191,21 +173,49 @@ public class student extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(listStudent);
 
+        btnSortASCByGrade.setText("Sort By Grade");
+        btnSortASCByGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSortASCByGradeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
+        jPanel26.setLayout(jPanel26Layout);
+        jPanel26Layout.setHorizontalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(btnSortASCByGrade)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel26Layout.setVerticalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(btnSortASCByGrade)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 580, 510));
@@ -522,7 +532,7 @@ public class student extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Certificate");
 
-        txtCertificate1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtCertificate1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Null" }));
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -715,7 +725,6 @@ public class student extends javax.swing.JInternalFrame {
             btnDelete.setEnabled(false);
             btnUpdate.setEnabled(false);
             txtName.setText("");
-            txtDate.setDateFormatString("");
             txtGender.setSelectedItem(-1);
             txtPhone.setText("");
             txtAddress.setText("");
@@ -752,6 +761,8 @@ public class student extends javax.swing.JInternalFrame {
             txtCertificate1.setSelectedIndex(-1);
             getStudents();
 
+
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void listStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listStudentMouseClicked
@@ -776,6 +787,7 @@ public class student extends javax.swing.JInternalFrame {
         txtGrade.setSelectedItem(grade);
         txtCertificate1.setSelectedItem(certificate);
 
+
         btnAdd.setEnabled(false);
         btnDelete.setEnabled(true);
         btnUpdate.setEnabled(true);
@@ -789,9 +801,6 @@ public class student extends javax.swing.JInternalFrame {
         int id = (int) dtm.getValueAt(selectIndex, 0);
         studentController.delete(id);
 
-//            pst = con.prepareStatement("delete from user where id=?");
-//            pst.setInt(1, id);
-//            pst.executeUpdate();
 
         JOptionPane.showMessageDialog(this, "Student has been deleted");
 
@@ -812,10 +821,16 @@ public class student extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewActionPerformed
 
+    private void btnSortASCByGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortASCByGradeActionPerformed
+        // TODO add your handling code here:
+        studentController.sortByGrade(listStudent, dtm);
+    }//GEN-LAST:event_btnSortASCByGradeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSortASCByGrade;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
@@ -844,6 +859,7 @@ public class student extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

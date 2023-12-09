@@ -1,6 +1,7 @@
 package com.tqbao.studentmanagement.Model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class User {
     private int id;
@@ -11,10 +12,11 @@ public class User {
     private String role;
     private String username;
     private String password;
+    private String loginHistory;
 
     public User() {};
 
-    public User(int id, String name, int age, String phone, String status, String role, String username, String password) {
+    public User(int id, String name, int age, String phone, String status, String role, String username, String password, String loginHistory) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -23,6 +25,18 @@ public class User {
         this.role = role;
         this.username = username;
         this.password = password;
+        this.loginHistory = loginHistory;
+    }
+
+    public User(String name, int age, String phone, String status, String role, String username, String password, String loginHistory) {
+        this.name = name;
+        this.age = age;
+        this.phone = phone;
+        this.status = status;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.loginHistory = loginHistory;
     }
 
     public User(String name, int age, String phone, String status, String role, String username, String password) {
@@ -33,6 +47,7 @@ public class User {
         this.role = role;
         this.username = username;
         this.password = password;
+        this.loginHistory = null;
     }
 
     public User(int id, String name, int age, String phone, String status, String role) {
@@ -54,6 +69,14 @@ public class User {
         this.role = role;
         this.username = name + phone;
         this.password = name + phone;
+    }
+
+    public String getLoginHistory() {
+        return loginHistory;
+    }
+
+    public void setLoginHistory(String loginHistory) {
+        this.loginHistory = loginHistory;
     }
 
     public int getId() {
@@ -127,10 +150,11 @@ public class User {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
                 ", status='" + status + '\'' +
+                ", role='" + role + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", loginHistory='" + loginHistory + '\'' +
                 '}';
     }
 }

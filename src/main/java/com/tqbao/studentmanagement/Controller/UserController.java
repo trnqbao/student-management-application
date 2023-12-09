@@ -3,6 +3,8 @@ package com.tqbao.studentmanagement.Controller;
 import com.tqbao.studentmanagement.DAO.UserDAO;
 import com.tqbao.studentmanagement.Model.User;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -12,27 +14,60 @@ public class UserController  {
         userDAO = new UserDAO();
     }
 
-    public void addUser(User user) {
+    public void add(User user) {
         userDAO.add(user);
     }
 
     public List<User> getAllUsers() {
         return userDAO.readAll();
     }
-    public User getUser(int id) {
+
+    public void showAllUsers(JTable jTable, DefaultTableModel dtm) {
+        userDAO.showAllUsers(jTable, dtm);
+    }
+
+    public void showAdmin(JTable jTable, DefaultTableModel dtm) {
+        userDAO.showAdmin(jTable, dtm);
+    }
+
+    public void showManager(JTable jTable, DefaultTableModel dtm) {
+        userDAO.showManager(jTable, dtm);
+    }
+
+    public void showEmployee(JTable jTable, DefaultTableModel dtm) {
+        userDAO.showEmployee(jTable, dtm);
+    }
+
+    public void showNormalUser(JTable jTable, DefaultTableModel dtm) {
+        userDAO.showNormalUser(jTable, dtm);
+    }
+
+    public void showLockedUser(JTable jTable, DefaultTableModel dtm) {
+        userDAO.showLockedUser(jTable, dtm);
+    }
+
+    public User get(int id) {
         return userDAO.read(id);
     }
-    public User getUser(String user, String pass) {
+    public User get(String user, String pass) {
         return userDAO.check(user, pass);
     }
 
-    public void updateUser(User user) {
+    public void update(User user) {
         userDAO.update(user);
     }
 
-    public void deleteUser(int id) {
+    public void delete(int id) {
         userDAO.delete(id);
     }
 
     public void updatePassword(int id, String password) {userDAO.updatePassword(id, password);}
+
+    public void updateLoginHistory(User user) {
+        userDAO.updateLoginHistory(user);
+    }
+
+
+
+
 }

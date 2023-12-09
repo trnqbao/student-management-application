@@ -40,48 +40,16 @@ public class user extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         getUsers();
+        txtRole.setSelectedIndex(2);
         btnDelete.setEnabled(false);
         btnUpdate.setEnabled(false);
     }
 
-
-    PreparedStatement pst;
-    ResultSet rs;
     UserController userController = new UserController();
     DefaultTableModel dtm;
-    
 
-    
-    
-    public void getUsers() {
-        int c;
-        try (Connection conn = ConnectionDB.getConnection()) {
-            pst = conn.prepareStatement("select id, name, phone, age, status, role from user");
-            rs = pst.executeQuery();
-
-
-            
-            ResultSetMetaData rsd = rs.getMetaData();
-            c = rsd.getColumnCount();
-            dtm = (DefaultTableModel) list_users.getModel();
-            dtm.setRowCount(0);
-            
-            while (rs.next()) {
-                Vector vector = new Vector();
-                for (int i = 0; i < c; i++) {
-                    vector.add(rs.getInt("id"));
-                    vector.add(rs.getString("name"));
-                    vector.add(rs.getString("phone"));
-                    vector.add(rs.getInt("age"));
-                    vector.add(rs.getString("status"));
-                    vector.add(rs.getString("role"));
-                }
-                dtm.addRow(vector);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void getUsers() {
+        userController.showAllUsers(list_users, dtm);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,6 +77,12 @@ public class user extends javax.swing.JInternalFrame {
         btnSave = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnAdmin = new javax.swing.JButton();
+        btnManager = new javax.swing.JButton();
+        btnEmployee = new javax.swing.JButton();
+        btnNormal = new javax.swing.JButton();
+        btnLocked = new javax.swing.JButton();
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
@@ -189,11 +163,11 @@ public class user extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Name", "Phone", "Age", "Status", "Role"
+                "ID", "Name", "Phone", "Age", "Status", "Role", "Login History"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -229,6 +203,70 @@ public class user extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAdmin.setText("Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        btnManager.setText("Manager");
+        btnManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerActionPerformed(evt);
+            }
+        });
+
+        btnEmployee.setText("Employee");
+        btnEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmployeeActionPerformed(evt);
+            }
+        });
+
+        btnNormal.setText("Normal");
+        btnNormal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNormalActionPerformed(evt);
+            }
+        });
+
+        btnLocked.setText("Locked");
+        btnLocked.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLockedActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnManager, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(btnNormal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnLocked, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdmin)
+                    .addComponent(btnManager)
+                    .addComponent(btnEmployee)
+                    .addComponent(btnNormal)
+                    .addComponent(btnLocked))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -247,26 +285,31 @@ public class user extends javax.swing.JInternalFrame {
                         .addGap(79, 79, 79)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
@@ -276,7 +319,6 @@ public class user extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dtm = (DefaultTableModel) list_users.getModel();
         int selectIndex = list_users.getSelectedRow();
-        int id = (int) dtm.getValueAt(selectIndex, 0);
         String name = dtm.getValueAt(selectIndex, 1).toString();
         String phone = dtm.getValueAt(selectIndex, 2).toString();
         int age = (int) dtm.getValueAt(selectIndex, 3);
@@ -298,33 +340,38 @@ public class user extends javax.swing.JInternalFrame {
         String name = txtName.getText();
         String phone = txtPhone.getText();
         String age = txtAge.getText();
-        String status = txtStatus.getSelectedItem().toString();
-        String role = txtRole.getSelectedItem().toString();
+        String status = (String) txtStatus.getSelectedItem();
+        String role = (String) txtRole.getSelectedItem();
 
-        if (phone.length() < 10) {
-            JOptionPane.showMessageDialog(this, "Phone number must be greater than 10 digits");
-            txtPhone.requestFocus();
-        } else if (!phone.chars().allMatch( Character::isDigit)){
-            JOptionPane.showMessageDialog(this, "Phone number must not contain characters");
-            txtPhone.requestFocus();
-        } else if (!age.chars().allMatch( Character::isDigit)) {
-            JOptionPane.showMessageDialog(this, "Age must not contain characters");
-            txtAge.requestFocus();
-        }else {
-            String username = name + phone;
-            String password = username;
+        if (!name.equals("")) {
+            if (phone.length() < 10) {
+                JOptionPane.showMessageDialog(this, "Phone number must be greater than 10 digits");
+                txtPhone.requestFocus();
+            } else if (!phone.chars().allMatch( Character::isDigit)){
+                JOptionPane.showMessageDialog(this, "Phone number must not contain characters");
+                txtPhone.requestFocus();
+            } else if (!age.chars().allMatch( Character::isDigit)) {
+                JOptionPane.showMessageDialog(this, "Age must not contain characters");
+                txtAge.requestFocus();
+            }else {
+                String username = name + phone;
+                String password = username;
 
-            User user = new User(name, Integer.parseInt(age), phone, status, role, username, password);
-            userController.addUser(user);
+                User user = new User(name, Integer.parseInt(age), phone, status, role, username, password);
+                userController.add(user);
 
-            JOptionPane.showMessageDialog(this, role + " added");
+                JOptionPane.showMessageDialog(this, role + " added");
 
-            txtName.setText("");
-            txtPhone.setText("");
-            txtAge.setText("");
-            txtStatus.setSelectedIndex(-1);
-            txtRole.setSelectedIndex(-1);
-            getUsers();
+                txtName.setText("");
+                txtPhone.setText("");
+                txtAge.setText("");
+                txtStatus.setSelectedIndex(0);
+                txtRole.setSelectedIndex(2);
+                getUsers();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please provide details");
+            txtName.requestFocus();
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -341,8 +388,6 @@ public class user extends javax.swing.JInternalFrame {
         String status = txtStatus.getSelectedItem().toString();
         String role = txtRole.getSelectedItem().toString();
 
-
-
         if (name.equals("")) {
             JOptionPane.showMessageDialog(this, "Check again with your information");
             txtName.requestFocus();
@@ -354,7 +399,7 @@ public class user extends javax.swing.JInternalFrame {
             txtPhone.requestFocus();
         }else {
             User user1 = new User(id, name, Integer.parseInt(age), phone, status, role);
-            userController.updateUser(user1);
+            userController.update(user1);
 
             JOptionPane.showMessageDialog(this, role + " Updated");
             if (user.getRole().equals("Admin") && user.getId()==user1.getId() && !user.getRole().equals(user1.getRole())) {
@@ -394,7 +439,7 @@ public class user extends javax.swing.JInternalFrame {
         String role = Objects.requireNonNull(txtRole.getSelectedItem()).toString();
 
         System.out.println(String.valueOf(id));
-        userController.deleteUser(id);
+        userController.delete(id);
 
 //            pst = con.prepareStatement("delete from user where id=?");
 //            pst.setInt(1, id);
@@ -414,9 +459,39 @@ public class user extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnLockedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLockedActionPerformed
+        // TODO add your handling code here:
+        userController.showLockedUser(list_users, dtm);
+    }//GEN-LAST:event_btnLockedActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+        userController.showAdmin(list_users, dtm);
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerActionPerformed
+        // TODO add your handling code here:
+        userController.showManager(list_users, dtm);
+    }//GEN-LAST:event_btnManagerActionPerformed
+
+    private void btnEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeeActionPerformed
+        // TODO add your handling code here:
+        userController.showEmployee(list_users, dtm);
+    }//GEN-LAST:event_btnEmployeeActionPerformed
+
+    private void btnNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNormalActionPerformed
+        // TODO add your handling code here:
+        userController.showNormalUser(list_users, dtm);
+    }//GEN-LAST:event_btnNormalActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEmployee;
+    private javax.swing.JButton btnLocked;
+    private javax.swing.JButton btnManager;
+    private javax.swing.JButton btnNormal;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -426,6 +501,7 @@ public class user extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable list_users;
     private javax.swing.JTextField txtAge;

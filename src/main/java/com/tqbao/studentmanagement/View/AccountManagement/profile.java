@@ -33,7 +33,8 @@ public class profile extends javax.swing.JInternalFrame {
     }
 
     private void showUserInformation(int id) {
-        User u = userController.getUser(user.getId());
+        User u = userController.get(user.getId());
+
         profile_role.setText(u.getRole());
         profile_name.setText(u.getName());
         profile_age.setText(String.valueOf(u.getAge()));
@@ -41,7 +42,7 @@ public class profile extends javax.swing.JInternalFrame {
         profile_username.setText(u.getUsername());
 
         user = u;
-        System.out.println(user.toString());
+
     }
 
     /**

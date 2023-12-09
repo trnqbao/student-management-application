@@ -13,6 +13,8 @@ import com.tqbao.studentmanagement.Controller.UserController;
 import com.tqbao.studentmanagement.Model.User;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -160,14 +162,14 @@ public class login extends javax.swing.JFrame {
             String username = txtUsername.getText();
             String password = txtPassword.getText();
             
-            user = userController.getUser(username, password);
 
-            if (user!=null) {
-
+            if (!(username.equals("") && password.equals(""))) {
+                user = userController.get(username, password);
                 if (user.getStatus().equals("Normal")) {
+                    userController.updateLoginHistory(user);
                     this.setVisible(false);
-                        dashboard dashboard = new dashboard();
-                        dashboard.setVisible(true);
+                    dashboard dashboard = new dashboard();
+                    dashboard.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Account has been locked");
                 }

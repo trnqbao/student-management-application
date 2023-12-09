@@ -29,7 +29,7 @@ public class dashboard extends javax.swing.JFrame {
     public dashboard() throws SQLException {
 
         initComponents();
-
+        System.out.println("Dashboard User: " + user.toString());
         DefauColor = new Color(1,1,1);
         ClickColor = new Color(100,100,100);
         if (user.getRole().equals("Manager")) {
