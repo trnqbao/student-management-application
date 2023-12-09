@@ -161,19 +161,24 @@ public class login extends javax.swing.JFrame {
         try {
             String username = txtUsername.getText();
             String password = txtPassword.getText();
-            
 
             if (!(username.equals("") && password.equals(""))) {
                 user = userController.get(username, password);
-                if (user.getStatus().equals("Normal")) {
-                    userController.updateLoginHistory(user);
-                    this.setVisible(false);
-                    dashboard dashboard = new dashboard();
-                    dashboard.setVisible(true);
+                if (user!=null) {
+                    if (user.getStatus().equals("Normal")) {
+                        userController.updateLoginHistory(user);
+                        this.setVisible(false);
+                        dashboard dashboard = new dashboard();
+                        dashboard.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Account has been locked");
+                    }
+                    System.out.println("Null");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Account has been locked");
+                    JOptionPane.showMessageDialog(this, "Username or Password do not match");
+                    txtPassword.setText("");
+                    txtUsername.requestFocus();
                 }
-
             } else  {
                 JOptionPane.showMessageDialog(this, "Username or Password do not match");
                 txtPassword.setText("");
