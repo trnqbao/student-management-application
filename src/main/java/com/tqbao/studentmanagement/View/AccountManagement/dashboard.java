@@ -27,7 +27,6 @@ public class dashboard extends javax.swing.JFrame {
     private static final String CERTIFICATE = "Certificate";
     Color DefauColor, ClickColor;
     public dashboard() throws SQLException {
-
         initComponents();
         System.out.println("Dashboard User: " + user.toString());
         DefauColor = new Color(1,1,1);

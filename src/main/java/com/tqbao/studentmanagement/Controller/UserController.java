@@ -67,6 +67,10 @@ public class UserController  {
         userDAO.updateLoginHistory(user);
     }
 
+    public User get(String phone) {
+        return userDAO.read(phone);
+    }
+
 
 
 

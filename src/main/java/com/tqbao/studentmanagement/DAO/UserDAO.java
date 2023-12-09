@@ -34,7 +34,7 @@ public class UserDAO implements Repository<User, Integer> {
 	private static final String SELECT_USER = "select * from user where id=?";
 	private static final String INSERT_USER = "insert into user(name, age, phone, status, role, username, password) values(?,?,?,?,?,?,?)";
 	private static final String INSERT_ADMIN = "insert into user(id, name, age, phone, status, role, username, password) values(1, \"Admin\", 20,\"0\", \"Normal\", \"Admin\", \"admin\", \"123456\")";
-	private static final String CHECK_ADMIN = "select * from user where id=1";
+	private static final String CHECK_PHONE_IF_EXISTS = "select * from user where phone=?";
 	private static final String UPDATE_USER = "update user set name=?, phone=?, age=?,status=?,role=? where id=?";
 	private static final String UPDATE_PASSWORD = "update user set password=? where id=?";
 	private static final String UPDATE_LOGIN_HISTORY = "update user set loginhistory=? where id=?";
@@ -49,8 +49,8 @@ public class UserDAO implements Repository<User, Integer> {
 													+ "phone VARCHAR(255) NOT NULL,"
 													+ "status VARCHAR(255) NOT NULL,"
 													+ "role VARCHAR(255) NOT NULL,"
-													+ "username VARCHAR(255) NOT NULL,"
-													+ "password VARCHAR(255) NOT NULL,"
+													+ "username VARCHAR(255),"
+													+ "password VARCHAR(255),"
 													+ "loginhistory VARCHAR(255))";
 
 	private static final String CREATE_DB_SQL = "CREATE DATABASE IF NOT EXISTS 521H0494_javaswing";
@@ -81,13 +81,6 @@ public class UserDAO implements Repository<User, Integer> {
 			if (user==null) {
 				stm.executeUpdate(INSERT_ADMIN);
 			}
-
-
-//			if (!stm.execute(CHECK_ADMIN)) {
-//				System.out.println(stm.executeUpdate(INSERT_ADMIN));
-//			}
-//			stm.executeUpdate(DELETE_USER_ADMIN_IF_EXISTS);
-//			stm.executeUpdate(INSERT_USER_ADMIN);
 			conn.close();
 			stm.close();
 		} catch (SQLException e) {
@@ -113,6 +106,8 @@ public class UserDAO implements Repository<User, Integer> {
 			if (row == 1) {
 				System.out.println(user.getRole() + " has been added");
 			}
+
+
 			conn.close();
 			pstm.close();
 		} catch (SQLException e) {
@@ -347,7 +342,31 @@ public class UserDAO implements Repository<User, Integer> {
 		}
 	}
 
+	public User read(String phone) {
+		try (Connection conn = ConnectionDB.getConnection()) {
+			PreparedStatement pstm = (PreparedStatement) conn.prepareStatement(CHECK_PHONE_IF_EXISTS);
+			pstm.setString(1, phone);
+			ResultSet rs = pstm.executeQuery();
 
+			if (rs.next()) {
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				int age = rs.getInt(3);
+				String phone1 = rs.getString(4);
+				String status = rs.getString(5);
+				String role = rs.getString(6);
+				String username = rs.getString(7);
+				String password = rs.getString(8);
+				String loginHitory = rs.getString(9);
 
-
+				User user = new User(id, name, age, phone1, status, role, username, password, loginHitory);
+				pstm.close();
+				rs.close();
+				return user;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
 }

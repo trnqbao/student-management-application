@@ -25,14 +25,14 @@ public class profile extends javax.swing.JInternalFrame {
     UserController userController = new UserController();
     public profile() throws SQLException {
         initComponents();
-        showUserInformation(user.getId());
+        getPersonalInformation(user.getId());
         
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
     }
 
-    private void showUserInformation(int id) {
+    private void getPersonalInformation(int id) {
         User u = userController.get(user.getId());
 
         profile_role.setText(u.getRole());

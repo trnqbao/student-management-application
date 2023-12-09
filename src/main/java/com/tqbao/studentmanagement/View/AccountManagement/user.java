@@ -40,6 +40,7 @@ public class user extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         getUsers();
+        txtStatus.setSelectedIndex(0);
         txtRole.setSelectedIndex(2);
         btnDelete.setEnabled(false);
         btnUpdate.setEnabled(false);
@@ -354,20 +355,23 @@ public class user extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Age must not contain characters");
                 txtAge.requestFocus();
             }else {
-                String username = name + phone;
-                String password = username;
+                User user = new User(name, Integer.parseInt(age), phone, status, role);
+                User comparedUser = userController.get(user.getPhone());
+                if (comparedUser==null) {
+                    userController.add(user);
 
-                User user = new User(name, Integer.parseInt(age), phone, status, role, username, password);
-                userController.add(user);
+                    JOptionPane.showMessageDialog(this, role + " added");
 
-                JOptionPane.showMessageDialog(this, role + " added");
-
-                txtName.setText("");
-                txtPhone.setText("");
-                txtAge.setText("");
-                txtStatus.setSelectedIndex(0);
-                txtRole.setSelectedIndex(2);
-                getUsers();
+                    txtName.setText("");
+                    txtPhone.setText("");
+                    txtAge.setText("");
+                    txtStatus.setSelectedIndex(0);
+                    txtRole.setSelectedIndex(2);
+                    getUsers();
+                } else {
+                    JOptionPane.showMessageDialog(this, "This phone " + user.getPhone() + " has been existed");
+                    txtPhone.requestFocus();
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please provide details");
@@ -423,8 +427,8 @@ public class user extends javax.swing.JInternalFrame {
             txtName.setText("");
             txtPhone.setText("");
             txtAge.setText("");
-            txtStatus.setSelectedIndex(-1);
-            txtRole.setSelectedIndex(-1);
+            txtStatus.setSelectedIndex(0);
+            txtRole.setSelectedIndex(2);
             getUsers();
         }
 
@@ -438,25 +442,20 @@ public class user extends javax.swing.JInternalFrame {
         int id = (int) dtm.getValueAt(selectIndex, 0);
         String role = Objects.requireNonNull(txtRole.getSelectedItem()).toString();
 
-        System.out.println(String.valueOf(id));
-        userController.delete(id);
-
-//            pst = con.prepareStatement("delete from user where id=?");
-//            pst.setInt(1, id);
-//            pst.executeUpdate();
-
-        JOptionPane.showMessageDialog(this, role + " has been deleted");
-
-        btnSave.setEnabled(true);
-        btnDelete.setEnabled(false);
-        btnUpdate.setEnabled(false);
-        txtName.setText("");
-        txtPhone.setText("");
-        txtAge.setText("");
-        txtStatus.setSelectedIndex(-1);
-        txtRole.setSelectedIndex(-1);
-        getUsers();
-
+        int result = JOptionPane.showConfirmDialog(this, "Are you sure that delete this " + role, "", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            userController.delete(id);
+            JOptionPane.showMessageDialog(this, role + " has been deleted");
+            btnSave.setEnabled(true);
+            btnDelete.setEnabled(false);
+            btnUpdate.setEnabled(false);
+            txtName.setText("");
+            txtPhone.setText("");
+            txtAge.setText("");
+            txtStatus.setSelectedIndex(-1);
+            txtRole.setSelectedIndex(-1);
+            getUsers();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnLockedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLockedActionPerformed
