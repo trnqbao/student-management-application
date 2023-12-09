@@ -16,6 +16,7 @@ public class User {
 
     public User() {};
 
+
     public User(int id, String name, int age, String phone, String status, String role, String username, String password, String loginHistory) {
         this.id = id;
         this.name = name;
@@ -26,6 +27,18 @@ public class User {
         this.username = username;
         this.password = password;
         this.loginHistory = loginHistory;
+    }
+
+    public User(int id, String name, int age, String phone, String status, String role, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.phone = phone;
+        this.status = status;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.loginHistory = null;
     }
 
     public User(String name, int age, String phone, String status, String role, String username, String password, String loginHistory) {

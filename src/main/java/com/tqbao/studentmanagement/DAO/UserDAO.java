@@ -33,9 +33,10 @@ public class UserDAO implements Repository<User, Integer> {
 	private static final String GET_ALL_USER = "select id, name, phone, age, status, role, loginhistory from user";
 	private static final String SELECT_USER = "select * from user where id=?";
 	private static final String INSERT_USER = "insert into user(name, age, phone, status, role, username, password) values(?,?,?,?,?,?,?)";
+	private static final String INSERT_ADMIN = "insert into user(id, name, age, phone, status, role, username, password) values(1, \"Admin\", 20,\"0\", \"Normal\", \"Admin\", \"admin\", \"123456\")";
+	private static final String CHECK_ADMIN = "select * from user where id=1";
 	private static final String UPDATE_USER = "update user set name=?, phone=?, age=?,status=?,role=? where id=?";
 	private static final String UPDATE_PASSWORD = "update user set password=? where id=?";
-
 	private static final String UPDATE_LOGIN_HISTORY = "update user set loginhistory=? where id=?";
 	private static final String DELETE_USER = "delete from user where id=?";
 
@@ -52,9 +53,6 @@ public class UserDAO implements Repository<User, Integer> {
 													+ "password VARCHAR(255) NOT NULL,"
 													+ "loginhistory VARCHAR(255))";
 
-
-	private static final String DELETE_USER_ADMIN_IF_EXISTS = "delete from user where id = 1";
-	private static final String INSERT_USER_ADMIN = "insert into user(id,name, age, phone, status, role, username, password) values(1,\"admin\",20,\"0987654321\",\"Normal\",\"Admin\",\"admin\",\"123456\")";
 	private static final String CREATE_DB_SQL = "CREATE DATABASE IF NOT EXISTS 521H0494_javaswing";
 
 
@@ -63,7 +61,7 @@ public class UserDAO implements Repository<User, Integer> {
 		createTable();
 	}
 	private void createDB() {
-		try (Connection conn = ConnectionDB.getConnection()) {
+		try (Connection conn = ConnectionDB.getConnectionMysql()) {
 			Statement stm = (Statement) conn.createStatement();
 			stm.executeUpdate(CREATE_DB_SQL);
 			conn.close();
@@ -78,6 +76,16 @@ public class UserDAO implements Repository<User, Integer> {
 			Statement stm = (Statement) conn.createStatement();
 			stm.execute(USE_DB_SQL);
 			stm.executeUpdate(CREATE_TABLE_USER);
+
+			User user = read(1);
+			if (user==null) {
+				stm.executeUpdate(INSERT_ADMIN);
+			}
+
+
+//			if (!stm.execute(CHECK_ADMIN)) {
+//				System.out.println(stm.executeUpdate(INSERT_ADMIN));
+//			}
 //			stm.executeUpdate(DELETE_USER_ADMIN_IF_EXISTS);
 //			stm.executeUpdate(INSERT_USER_ADMIN);
 			conn.close();
@@ -338,6 +346,7 @@ public class UserDAO implements Repository<User, Integer> {
 			Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+
 
 
 
