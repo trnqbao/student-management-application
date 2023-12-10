@@ -6,7 +6,9 @@
 package com.tqbao.studentmanagement.View.AccountManagement;
 
 import com.tqbao.studentmanagement.View.Certificate.certificate;
+import com.tqbao.studentmanagement.View.StudentManagement.student_backup;
 import com.tqbao.studentmanagement.View.StudentManagement.student;
+
 import javax.swing.*;
 import java.awt.Color;
 import java.sql.*;
@@ -394,7 +396,7 @@ public class dashboard extends javax.swing.JFrame {
     private void menuStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuStudentMouseClicked
         // TODO add your handling code here:
         jDesktopPane.removeAll();
-        jDesktopPane.add(new student()).setVisible(true);
+        jDesktopPane.add(new student(user.getRole())).setVisible(true);
     }//GEN-LAST:event_menuStudentMouseClicked
 
     private void menuCertificateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCertificateMouseClicked

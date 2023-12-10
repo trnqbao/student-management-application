@@ -18,8 +18,8 @@ public class CertificateController {
         certificateDAO.add(certificate);
     }
 
-    public Certificate get(int id) {
-        return certificateDAO.read(id);
+    public Certificate get(String name) {
+        return certificateDAO.read(name);
     }
 
     public List<Certificate> getAll() {

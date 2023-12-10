@@ -295,12 +295,17 @@ public class certificate extends javax.swing.JInternalFrame {
             txtName.requestFocus();
         }
         else {
-            Certificate certificate = new Certificate(name);
-            certificateController.add(certificate);
-            JOptionPane.showMessageDialog(this, name + " added");
+            if (certificateController.get(name) == null) {
+                Certificate certificate = new Certificate(name);
+                certificateController.add(certificate);
+                JOptionPane.showMessageDialog(this, name + " added");
 
-            txtName.setText("");
-            getCertificates();
+                txtName.setText("");
+                getCertificates();
+            } else {
+                JOptionPane.showMessageDialog(this, "Certificate must not be 'Null'");
+            }
+
         }
     }//GEN-LAST:event_btnAddActionPerformed
 

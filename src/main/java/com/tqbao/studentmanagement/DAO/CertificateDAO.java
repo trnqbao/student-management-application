@@ -16,12 +16,14 @@ import java.util.logging.Logger;
 public class CertificateDAO implements Repository<Certificate, Integer> {
     private static final String CREATE_TABLE_CERTIFICATE = "CREATE TABLE IF NOT EXISTS certificate("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
-            + "name VARCHAR(255) NOT NULL)";
+            + "name VARCHAR(255))";
 
     public static final String GET_ALL_CERTIFICATE = "select * from certificate";
     private static final String SELECT_CERTIFICATE = "select * from certificate where id=?";
+
+    private static final String CHECK_CERTIFICATE_IF_EXISTS = "select * from certificate where name=?";
     private static final String INSERT_CERTIFICATE = "insert into certificate(name) values(?)";
-    private static final String INSERT_NULL_CERTIFICATE = "insert into certificate(name) values(\"Null\")";
+//    private static final String INSERT_NULL_CERTIFICATE = "insert into certificate(name) values(\"Null\")";
     private static final String UPDATE_CERTIFICATE = "update certificate set name=? where id=?";
     private static final String DELETE_CERTIFICATE = "delete from certificate where id=?";
 
@@ -33,7 +35,12 @@ public class CertificateDAO implements Repository<Certificate, Integer> {
         try (Connection conn = ConnectionDB.getConnection()) {
             Statement stm = (Statement) conn.createStatement();
             stm.executeUpdate(CREATE_TABLE_CERTIFICATE);
-            stm.executeUpdate(INSERT_NULL_CERTIFICATE);
+//            stm.executeUpdate(INSERT_NULL_CERTIFICATE);
+
+//            Certificate certificate = read(1);
+//            if (certificate == null) {
+//                stm.executeUpdate(INSERT_NULL_CERTIFICATE);
+//            }
             conn.close();
             stm.close();
         } catch (SQLException e) {
@@ -185,5 +192,27 @@ public class CertificateDAO implements Repository<Certificate, Integer> {
         } catch (SQLException ex) {
             Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public Certificate read(String name) {
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = (PreparedStatement) conn.prepareStatement(CHECK_CERTIFICATE_IF_EXISTS);
+            pstm.setString(1, name);
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                String cName = rs.getString(2);
+                Certificate certificate = new Certificate(id, cName);
+                System.out.println("Getting c: " + certificate.toString());
+                pstm.close();
+                rs.close();
+                return certificate;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

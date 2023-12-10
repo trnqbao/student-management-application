@@ -26,9 +26,9 @@ public class UserController  {
         userDAO.showAllUsers(jTable, dtm);
     }
 
-    public void showAdmin(JTable jTable, DefaultTableModel dtm) {
-        userDAO.showAdmin(jTable, dtm);
-    }
+//    public void showAdmin(JTable jTable, DefaultTableModel dtm) {
+//        userDAO.showAdmin(jTable, dtm);
+//    }
 
     public void showManager(JTable jTable, DefaultTableModel dtm) {
         userDAO.showManager(jTable, dtm);

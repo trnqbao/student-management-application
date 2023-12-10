@@ -25,12 +25,11 @@ import java.util.logging.Logger;
  * @author tqbao
  */
 public class UserDAO implements Repository<User, Integer> {
-	private static final String GET_ADMIN = "select id, name, phone, age, status, role, loginhistory from user where role = \"Admin\"";
 	private static final String GET_MANAGER = "select id, name, phone, age, status, role, loginhistory from user where role = \"Manager\"";
 	private static final String GET_EMPLOYEE = "select id, name, phone, age, status, role, loginhistory from user where role = \"Employee\"";
-	private static final String GET_NORMAL_USERS = "select id, name, phone, age, status, role, loginhistory from user where status = \"Normal\"";
-	private static final String GET_LOCKED_USERS = "select id, name, phone, age, status, role, loginhistory from user where status = \"Locked\"";
-	private static final String GET_ALL_USER = "select id, name, phone, age, status, role, loginhistory from user";
+	private static final String GET_NORMAL_USERS = "select id, name, phone, age, status, role, loginhistory from user where status = \"Normal\" and role != \"Admin\" order by role";
+	private static final String GET_LOCKED_USERS = "select id, name, phone, age, status, role, loginhistory from user where status = \"Locked\" and role != \"Admin\" order by role";
+	private static final String GET_ALL_USER = "select id, name, phone, age, status, role, loginhistory from user where role != \"Admin\"";
 	private static final String SELECT_USER = "select * from user where id=?";
 	private static final String INSERT_USER = "insert into user(name, age, phone, status, role, username, password) values(?,?,?,?,?,?,?)";
 	private static final String INSERT_ADMIN = "insert into user(id, name, age, phone, status, role, username, password) values(1, \"Admin\", 20,\"0\", \"Normal\", \"Admin\", \"admin\", \"123456\")";
@@ -146,10 +145,6 @@ public class UserDAO implements Repository<User, Integer> {
 
 	public void showAllUsers(JTable jTable, DefaultTableModel dtm) {
 		showUsers(jTable, dtm, GET_ALL_USER);
-	}
-
-	public void showAdmin(JTable jTable, DefaultTableModel dtm) {
-		showUsers(jTable, dtm, GET_ADMIN);
 	}
 
 	public void showManager(JTable jTable, DefaultTableModel dtm) {

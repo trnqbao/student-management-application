@@ -41,7 +41,7 @@ public class user extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         getUsers();
         txtStatus.setSelectedIndex(0);
-        txtRole.setSelectedIndex(2);
+        txtRole.setSelectedIndex(1);
         btnDelete.setEnabled(false);
         btnUpdate.setEnabled(false);
     }
@@ -79,7 +79,6 @@ public class user extends javax.swing.JInternalFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        btnAdmin = new javax.swing.JButton();
         btnManager = new javax.swing.JButton();
         btnEmployee = new javax.swing.JButton();
         btnNormal = new javax.swing.JButton();
@@ -104,7 +103,7 @@ public class user extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Role");
 
-        txtRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Manager", "Employee" }));
+        txtRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Employee" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -204,13 +203,6 @@ public class user extends javax.swing.JInternalFrame {
             }
         });
 
-        btnAdmin.setText("Admin");
-        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminActionPerformed(evt);
-            }
-        });
-
         btnManager.setText("Manager");
         btnManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,23 +236,21 @@ public class user extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(38, 38, 38)
                 .addComponent(btnManager, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addComponent(btnEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(52, 52, 52)
                 .addComponent(btnNormal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLocked, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(36, 36, 36))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdmin)
                     .addComponent(btnManager)
                     .addComponent(btnEmployee)
                     .addComponent(btnNormal)
@@ -277,9 +267,9 @@ public class user extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(14, 14, 14)
+                            .addGap(2, 2, 2)
                             .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -289,7 +279,7 @@ public class user extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +300,7 @@ public class user extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         pack();
@@ -366,7 +356,7 @@ public class user extends javax.swing.JInternalFrame {
                     txtPhone.setText("");
                     txtAge.setText("");
                     txtStatus.setSelectedIndex(0);
-                    txtRole.setSelectedIndex(2);
+                    txtRole.setSelectedIndex(1);
                     getUsers();
                 } else {
                     JOptionPane.showMessageDialog(this, "This phone " + user.getPhone() + " has been existed");
@@ -409,12 +399,15 @@ public class user extends javax.swing.JInternalFrame {
             if (user.getRole().equals("Admin") && user.getId()==user1.getId() && !user.getRole().equals(user1.getRole())) {
                 this.setVisible(false);
                 JOptionPane.showMessageDialog(this, user1.getRole() + " can not access to admin functions");
-                if (user1.getRole().equals("Manager")) {
-
-
-                } else {
-
-                }
+                this.setVisible(false);
+                login login = new login();
+                login.setVisible(true);
+//                if (user1.getRole().equals("Manager")) {
+//
+//
+//                } else {
+//
+//                }
             }
 
             if (user1.getStatus().equals("Locked")) {
@@ -428,7 +421,7 @@ public class user extends javax.swing.JInternalFrame {
             txtPhone.setText("");
             txtAge.setText("");
             txtStatus.setSelectedIndex(0);
-            txtRole.setSelectedIndex(2);
+            txtRole.setSelectedIndex(1);
             getUsers();
         }
 
@@ -463,11 +456,6 @@ public class user extends javax.swing.JInternalFrame {
         userController.showLockedUser(list_users, dtm);
     }//GEN-LAST:event_btnLockedActionPerformed
 
-    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
-        userController.showAdmin(list_users, dtm);
-    }//GEN-LAST:event_btnAdminActionPerformed
-
     private void btnManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerActionPerformed
         // TODO add your handling code here:
         userController.showManager(list_users, dtm);
@@ -485,7 +473,6 @@ public class user extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEmployee;
     private javax.swing.JButton btnLocked;
