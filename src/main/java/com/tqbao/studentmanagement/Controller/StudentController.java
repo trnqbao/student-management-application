@@ -22,12 +22,24 @@ public class StudentController {
         return studentDAO.read(id);
     }
 
+    public Student get(String name, String phone) {
+        return studentDAO.read(name, phone);
+    }
+
     public List<Student> getAll() {
         return studentDAO.readAll();
     }
 
     public void showStudents(JTable jTable, DefaultTableModel dtm) {
         studentDAO.showStudents(jTable, dtm);
+    }
+
+    public void showExistedStudent(String name, String phone, JTable jTable, DefaultTableModel dtm) {
+        studentDAO.showExistedStudent(name, phone, jTable, dtm);
+    }
+
+    public Student showExistedStudent(String name, String phone) {
+        return studentDAO.showExistedStudent(name, phone);
     }
 
     public void update(Student student) {
@@ -39,6 +51,13 @@ public class StudentController {
     }
 
     public void sortByGrade(JTable jTable, DefaultTableModel dtm){
-        studentDAO.sortASCByGrade(jTable, dtm);
+        studentDAO.sortByGrade(jTable, dtm);
+    }
+
+    public void sortByName(JTable jTable, DefaultTableModel dtm){
+        studentDAO.sortByName(jTable, dtm);
+    }
+    public void sortByCertificate(JTable jTable, DefaultTableModel dtm){
+        studentDAO.sortByCertificate(jTable, dtm);
     }
 }

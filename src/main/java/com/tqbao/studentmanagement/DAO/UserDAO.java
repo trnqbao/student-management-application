@@ -6,7 +6,7 @@
 package com.tqbao.studentmanagement.DAO;
 
 import com.tqbao.studentmanagement.Model.User;
-import com.tqbao.studentmanagement.View.AccountManagement.dashboard;
+import com.tqbao.studentmanagement.View.AccountManagement.Dashboard;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -333,7 +333,7 @@ public class UserDAO implements Repository<User, Integer> {
 			}
 
 		} catch (SQLException ex) {
-			Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 

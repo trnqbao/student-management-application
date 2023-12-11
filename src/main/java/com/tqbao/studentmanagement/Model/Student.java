@@ -22,6 +22,17 @@ public class Student {
         this.grade = grade;
         this.certificate = certificate;
     }
+    
+    public Student(int id, String name, Date birthday, String gender, String phone, String address, String grade) {
+        this.id = id;
+        this.name = name;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.grade = grade;
+        this.certificate = null;
+    }
 
     public Student(String name, Date birthday, String gender, String phone, String address, String grade, String certificate) {
         this.name = name;

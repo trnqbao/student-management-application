@@ -1,7 +1,7 @@
 package com.tqbao.studentmanagement.DAO;
 
 import com.tqbao.studentmanagement.Model.Student;
-import com.tqbao.studentmanagement.View.AccountManagement.dashboard;
+import com.tqbao.studentmanagement.View.AccountManagement.Dashboard;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,10 +16,13 @@ public class StudentDAO implements Repository<Student, Integer> {
 
     private static final String GET_ALL_STUDENTS = "select * from student";
     private static final String SELECT_STUDENT = "select * from student where id=?";
+    private static final String SEARCH_STUDENT = "select * from student where name=? and phone=?";
     private static final String INSERT_STUDENT = "insert into student(name, birthday, gender, phone, address, grade, certificate) values(?,?,?,?,?,?,?)";
     private static final String UPDATE_STUDENT = "update student set name=?, birthday=?, gender=?, phone=?, address=?, grade=?, certificate=? where id=?";
     private static final String DELETE_STUDENT = "delete from student where id=?";
-    private static final String SORT_BY_GRADE_ASC = "select * from student order by grade";
+    private static final String SORT_BY_GRADE = "select * from student order by grade";
+    private static final String SORT_BY_NAME = "select * from student order by name";
+    private static final String SORT_BY_CERTIFICATE = "select * from student order by certificate";
     private static final String CREATE_TABLE_STUDENT = "CREATE TABLE IF NOT EXISTS student("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "name VARCHAR(255) NOT NULL,"
@@ -29,6 +32,7 @@ public class StudentDAO implements Repository<Student, Integer> {
             + "address VARCHAR(255) NOT NULL,"
             + "grade VARCHAR(255) NOT NULL,"
             + "certificate VARCHAR(255))";
+
 
     public StudentDAO() {
         createTable();
@@ -129,12 +133,72 @@ public class StudentDAO implements Repository<Student, Integer> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public void showExistedStudent(String name, String phone, JTable jTable, DefaultTableModel dtm) {
+        int c;
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(SEARCH_STUDENT);
+            pstm.setString(1, name);
+            pstm.setString(2, phone);
+            ResultSet rs = pstm.executeQuery();
 
-    @Override
+
+            dtm = (DefaultTableModel) jTable.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector vector = new Vector();
+                vector.add(rs.getInt("id"));
+                vector.add(rs.getString("name"));
+                vector.add(rs.getDate("birthday"));
+                vector.add(rs.getString("gender"));
+                vector.add(rs.getString("phone"));
+                vector.add(rs.getString("address"));
+                vector.add(rs.getString("grade"));
+                vector.add(rs.getString("certificate"));
+
+                dtm.addRow(vector);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Student showExistedStudent(String name, String phone) {
+
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(SEARCH_STUDENT);
+            pstm.setString(1, name);
+            pstm.setString(2, phone);
+            ResultSet rs = pstm.executeQuery();
+
+
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                String name1 = rs.getString(2);
+                Date birthday = rs.getDate(3);
+                String gender = rs.getString(4);
+                String phone1 = rs.getString(5);
+                String address = rs.getString(6);
+                String grade = rs.getString(7);
+                String certificate = rs.getString(8);
+
+                Student student = new Student(id, name1, birthday, gender, phone1, address, grade, certificate);
+                return student;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+
+        @Override
     public Student read(Integer id) {
         try (Connection conn = ConnectionDB.getConnection()) {
             PreparedStatement pstm = (PreparedStatement) conn.prepareStatement(SELECT_STUDENT);
@@ -161,7 +225,34 @@ public class StudentDAO implements Repository<Student, Integer> {
         return null;
     }
 
+    public Student read(String name, String phone) {
+        try (Connection conn = ConnectionDB.getConnection()) {
 
+            PreparedStatement pstm = (PreparedStatement) conn.prepareStatement(SEARCH_STUDENT);
+            pstm.setString(1, name);
+            pstm.setString(2, phone);
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                String name1 = rs.getString(2);
+                Date birthday = rs.getDate(3);
+                String gender = rs.getString(4);
+                String phone1 = rs.getString(5);
+                String address = rs.getString(6);
+                String grade = rs.getString(7);
+                String certificate = rs.getString(8);
+
+                Student student = new Student(id, name1, birthday, gender, phone1, address, grade, certificate);
+                pstm.close();
+                rs.close();
+                return student;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 
     @Override
     public boolean update(Student item) {
@@ -208,10 +299,10 @@ public class StudentDAO implements Repository<Student, Integer> {
         }
     }
 
-    public void sortASCByGrade(JTable jTable, DefaultTableModel dtm) {
+    public void sortByGrade(JTable jTable, DefaultTableModel dtm) {
         int c;
         try (Connection conn = ConnectionDB.getConnection()) {
-            PreparedStatement pstm = conn.prepareStatement(SORT_BY_GRADE_ASC);
+            PreparedStatement pstm = conn.prepareStatement(SORT_BY_GRADE);
             ResultSet rs = pstm.executeQuery();
 
             ResultSetMetaData rsd = rs.getMetaData();
@@ -235,7 +326,69 @@ public class StudentDAO implements Repository<Student, Integer> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(dashboard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void sortByCertificate(JTable jTable, DefaultTableModel dtm) {
+        int c;
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(SORT_BY_CERTIFICATE);
+            ResultSet rs = pstm.executeQuery();
+
+            ResultSetMetaData rsd = rs.getMetaData();
+            c = rsd.getColumnCount();
+            dtm = (DefaultTableModel) jTable.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector vector = new Vector();
+                for (int i = 0; i < c; i++) {
+                    vector.add(rs.getInt("id"));
+                    vector.add(rs.getString("name"));
+                    vector.add(rs.getDate("birthday"));
+                    vector.add(rs.getString("gender"));
+                    vector.add(rs.getString("phone"));
+                    vector.add(rs.getString("address"));
+                    vector.add(rs.getString("grade"));
+                    vector.add(rs.getString("certificate"));
+                }
+                dtm.addRow(vector);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void sortByName(JTable jTable, DefaultTableModel dtm) {
+        int c;
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(SORT_BY_NAME);
+            ResultSet rs = pstm.executeQuery();
+
+            ResultSetMetaData rsd = rs.getMetaData();
+            c = rsd.getColumnCount();
+            dtm = (DefaultTableModel) jTable.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector vector = new Vector();
+                for (int i = 0; i < c; i++) {
+                    vector.add(rs.getInt("id"));
+                    vector.add(rs.getString("name"));
+                    vector.add(rs.getDate("birthday"));
+                    vector.add(rs.getString("gender"));
+                    vector.add(rs.getString("phone"));
+                    vector.add(rs.getString("address"));
+                    vector.add(rs.getString("grade"));
+                    vector.add(rs.getString("certificate"));
+                }
+                dtm.addRow(vector);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
