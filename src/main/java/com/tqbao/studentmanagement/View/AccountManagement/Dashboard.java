@@ -23,35 +23,33 @@ public class Dashboard extends javax.swing.JFrame {
     /**
      * Creates new form user
      */
-    public static final String USERS = "Users";
-    public static final String STUDENT = "Students";
-    public static final String PROFILE = "Profile";
-    private static final String CERTIFICATE = "Certificate";
+   
     Color DefauColor, ClickColor;
     public Dashboard() throws SQLException {
         initComponents();
         this.setResizable(false);
+        this.setTitle("Home Page");
         System.out.println("Dashboard User: " + user.toString());
         DefauColor = new Color(1,1,1);
-        ClickColor = new Color(100,100,100);
+        ClickColor = new Color(65, 65, 65);
         if (user.getRole().equals("Manager")) {
             menuUser.setVisible(false);
             jDesktopPane.removeAll();
             jDesktopPane.add(new Profile()).setVisible(true);
             menuProfile.setBackground(ClickColor);
-            title.setText(PROFILE);
+            
         } else if (user.getRole().equals("Employee")) {
             menuUser.setVisible(false);
             menuCertificate.setVisible(false);
             jDesktopPane.removeAll();
             jDesktopPane.add(new Profile()).setVisible(true);
             menuProfile.setBackground(ClickColor);
-            title.setText(PROFILE);
+          
         } else {
             jDesktopPane.removeAll();
             jDesktopPane.add(new Profile()).setVisible(true);
             menuProfile.setBackground(ClickColor);
-            title.setText(PROFILE);
+           
         }
 
 
@@ -70,8 +68,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        title = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jDesktopPane = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         menuCertificate = new javax.swing.JPanel();
@@ -90,38 +91,45 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel6.setBackground(new java.awt.Color(63, 82, 188));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setFont(new java.awt.Font("Microsoft New Tai Lue", 1, 30)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Education System Information");
+        jPanel5.setBackground(new java.awt.Color(102, 153, 255));
 
-        title.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 15)); // NOI18N
-        title.setForeground(new java.awt.Color(255, 255, 255));
-        title.setText("Accounts");
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edu.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(title))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel10)))
-                .addContainerGap(662, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jLabel6)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(title)
-                .addContainerGap(24, Short.MAX_VALUE))
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 130));
+
+        jPanel7.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Education System Information");
+        jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 610, 70));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 2, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("\"An investment in knowledge pays the best interest\"");
+        jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 620, 30));
+
+        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 950, 130));
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 130));
 
@@ -305,14 +313,14 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menuCertificate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menuProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menuStudent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menuUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(menuProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menuCertificate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menuStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menuUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -354,7 +362,7 @@ public class Dashboard extends javax.swing.JFrame {
         menuStudent.setBackground(DefauColor);
         menuCertificate.setBackground(DefauColor);
         menuUser.setBackground(DefauColor);
-        title.setText(PROFILE);
+       
     }//GEN-LAST:event_menuProfileMousePressed
 
     private void menuStudentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuStudentMousePressed
@@ -363,7 +371,7 @@ public class Dashboard extends javax.swing.JFrame {
         menuStudent.setBackground(ClickColor);
         menuCertificate.setBackground(DefauColor);
         menuUser.setBackground(DefauColor);
-        title.setText(STUDENT);
+        
     }//GEN-LAST:event_menuStudentMousePressed
 
     private void menuCertificateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCertificateMousePressed
@@ -372,7 +380,7 @@ public class Dashboard extends javax.swing.JFrame {
         menuStudent.setBackground(DefauColor);
         menuCertificate.setBackground(ClickColor);
         menuUser.setBackground(DefauColor);
-        title.setText(CERTIFICATE);
+        
     }//GEN-LAST:event_menuCertificateMousePressed
 
     private void menuUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuUserMousePressed
@@ -381,7 +389,7 @@ public class Dashboard extends javax.swing.JFrame {
         menuStudent.setBackground(DefauColor);
         menuCertificate.setBackground(DefauColor);
         menuUser.setBackground(ClickColor);
-        title.setText(USERS);
+  
     }//GEN-LAST:event_menuUserMousePressed
 
     private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
@@ -439,18 +447,21 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel menuCertificate;
     private javax.swing.JLabel menuCertificate_1;
     private javax.swing.JPanel menuProfile;
     private javax.swing.JPanel menuStudent;
     private javax.swing.JPanel menuUser;
-    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

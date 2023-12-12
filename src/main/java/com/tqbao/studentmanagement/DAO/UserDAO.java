@@ -19,6 +19,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.tqbao.studentmanagement.ConstantJDBC.DATABASE;
+
 
 /**
  *
@@ -39,7 +41,7 @@ public class UserDAO implements Repository<User, Integer> {
 	private static final String UPDATE_LOGIN_HISTORY = "update user set loginhistory=? where id=?";
 	private static final String DELETE_USER = "delete from user where id=?";
 
-	private static final String USE_DB_SQL = "use 521H0494_javaswing";
+	private static final String USE_DB_SQL = "use " + DATABASE;
 	private static final String CHECK_LOGIN_SQL = "select * from user where username=? and password=?";
 	private static final String CREATE_TABLE_USER = "CREATE TABLE IF NOT EXISTS user("
 													+ "id INT AUTO_INCREMENT PRIMARY KEY,"
@@ -52,7 +54,7 @@ public class UserDAO implements Repository<User, Integer> {
 													+ "password VARCHAR(255),"
 													+ "loginhistory VARCHAR(255))";
 
-	private static final String CREATE_DB_SQL = "CREATE DATABASE IF NOT EXISTS 521H0494_javaswing";
+	private static final String CREATE_DB_SQL = "CREATE DATABASE IF NOT EXISTS " + DATABASE;
 
 
 	public UserDAO() {

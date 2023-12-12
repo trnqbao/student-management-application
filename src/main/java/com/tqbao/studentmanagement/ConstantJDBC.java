@@ -1,10 +1,15 @@
 package com.tqbao.studentmanagement;
 
-public class ConstantJDBC {
-    public static final String urlMysql = "jdbc:mysql://localhost/mysql";
-    public static final String url = "jdbc:mysql://localhost/521H0494_javaswing";
-    public static final String driverName = "com.mysql.cj.jdbc.Driver";
-    public static final String username = "root";
 
-    public static final String password = "";
+//  You can edit the static variables below to match your localhost
+
+public class ConstantJDBC {
+    public static final String DATABASE = "521h0494_521h0398_javaswing";
+    public static final String URL_TO_LOCALHOST = "jdbc:mysql://localhost/mysql";
+    public static final String URL_TO_DATABASE = "jdbc:mysql://localhost/" + DATABASE;
+    public static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
+    public static final String USERNAME = "root";
+    public static final String PASSWORD = "";
+
+
 }

@@ -627,7 +627,12 @@ public class Students extends javax.swing.JInternalFrame {
         txtPhone.setText(phone);
         txtAddress.setText(address);
         txtGrade.setSelectedItem(grade);
-        txtCertificate1.setSelectedItem(certificate);
+        if (certificate != null) {
+            txtCertificate1.setSelectedItem(certificate);
+        } else {
+            txtCertificate1.setSelectedIndex(0);
+        }
+//        txtCertificate1.setSelectedItem(certificate);
 
 
         btnAdd.setEnabled(false);
@@ -639,9 +644,15 @@ public class Students extends javax.swing.JInternalFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         String name = txtName.getText();
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(this, "Name must not be empty");
+            txtName.requestFocus();
+            return;
+        }
         Date birthday;
         if (txtDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Birthday must not be null");
+            JOptionPane.showMessageDialog(this, "Birthday must not be empty");
+            txtDate.requestFocus();
             return;
         }
         birthday = new java.sql.Date(txtDate.getDate().getTime());
@@ -652,38 +663,33 @@ public class Students extends javax.swing.JInternalFrame {
         String grade = (String) txtGrade.getSelectedItem();
         String certificate = (String) txtCertificate1.getSelectedItem();
         System.out.println("C: " + certificate);
-        if (!name.equals("")) {
-            if (phone.length() < 10) {
-                JOptionPane.showMessageDialog(this, "Phone number must be greater than 10 digits");
-                txtPhone.requestFocus();
-            } else if (!phone.chars().allMatch( Character::isDigit)){
-                JOptionPane.showMessageDialog(this, "Phone number must not contain characters");
-                txtPhone.requestFocus();
-            } else {
-                Student student;
-                if (certificate.equals("Null")) {
-                    student = new Student(name, birthday, gender, phone, address, grade);
-                } else {
-                    student = new Student(name, birthday, gender, phone, address, grade, certificate);
-                }
-                studentController.add(student);
-
-                JOptionPane.showMessageDialog(this, "Student has been added");
-
-                txtName.setText("");
-
-                txtGender.setSelectedItem(-1);
-                txtPhone.setText("");
-                txtAddress.setText("");
-                txtGrade.setSelectedIndex(0);
-                txtCertificate1.setSelectedIndex(0);
-                getStudents();
-            }
-
+        if (phone.length() < 10) {
+            JOptionPane.showMessageDialog(this, "Phone number must be greater than 10 digits");
+            txtPhone.requestFocus();
+        } else if (!phone.chars().allMatch(Character::isDigit)) {
+            JOptionPane.showMessageDialog(this, "Phone number must not contain characters");
+            txtPhone.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(this, "Please provide details");
-            txtName.requestFocus();
+            Student student;
+            if (certificate.equals("Null")) {
+                student = new Student(name, birthday, gender, phone, address, grade);
+            } else {
+                student = new Student(name, birthday, gender, phone, address, grade, certificate);
+            }
+            studentController.add(student);
+
+            JOptionPane.showMessageDialog(this, "Student has been added");
+
+            txtName.setText("");
+
+            txtGender.setSelectedItem(-1);
+            txtPhone.setText("");
+            txtAddress.setText("");
+            txtGrade.setSelectedIndex(0);
+            txtCertificate1.setSelectedIndex(0);
+            getStudents();
         }
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -767,6 +773,9 @@ public class Students extends javax.swing.JInternalFrame {
         btnUpdate.setEnabled(false);
         btnCancel.setEnabled(false);
         txtName.setText("");
+
+        searchStudentName.setText("");
+        searchStudentPhone.setText("");
 
         txtGender.setSelectedItem(-1);
         txtPhone.setText("");

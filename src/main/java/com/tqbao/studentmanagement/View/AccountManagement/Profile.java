@@ -62,7 +62,7 @@ public class Profile extends javax.swing.JInternalFrame {
         jPanel13 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel31 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel28 = new javax.swing.JPanel();
         jPanel32 = new javax.swing.JPanel();
         btn_remove_picture = new javax.swing.JButton();
@@ -128,18 +128,8 @@ public class Profile extends javax.swing.JInternalFrame {
 
         jPanel31.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
-        );
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/avatar.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
@@ -147,20 +137,20 @@ public class Profile extends javax.swing.JInternalFrame {
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel31Layout.createSequentialGroup()
+            .addGroup(jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel9.add(jPanel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 250, 300));
+        jPanel9.add(jPanel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 250, 250));
 
-        jPanel13.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 300));
+        jPanel13.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 260));
 
         jPanel28.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -175,7 +165,9 @@ public class Profile extends javax.swing.JInternalFrame {
         });
         jPanel32.add(btn_remove_picture, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 10, 160, -1));
 
-        jPanel28.add(jPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 310, 70));
+        jPanel28.add(jPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 70));
+
+        jPanel13.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 310, 60));
 
         jPanel33.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -188,9 +180,7 @@ public class Profile extends javax.swing.JInternalFrame {
         });
         jPanel33.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 20, 160, -1));
 
-        jPanel28.add(jPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 60));
-
-        jPanel13.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 310, 130));
+        jPanel13.add(jPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 310, 60));
 
         jPanel6.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 310, 430));
 
@@ -473,10 +463,6 @@ public class Profile extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btn_remove_pictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_remove_pictureActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_remove_pictureActionPerformed
-
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
 
         ChangePassword chPassword = new ChangePassword();
@@ -485,17 +471,21 @@ public class Profile extends javax.swing.JInternalFrame {
         chPassword.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnChangePasswordActionPerformed
 
+    private void btn_remove_pictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_remove_pictureActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_remove_pictureActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btn_remove_picture;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;

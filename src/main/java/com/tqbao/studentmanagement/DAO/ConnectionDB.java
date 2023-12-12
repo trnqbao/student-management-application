@@ -1,6 +1,7 @@
 package com.tqbao.studentmanagement.DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -12,9 +13,9 @@ public class ConnectionDB {
 
     public static Connection getConnection() {
         try {
-            Class.forName(driverName);
+            Class.forName(DRIVER_NAME);
             try {
-                conn = DriverManager.getConnection(url, username, password);
+                conn = DriverManager.getConnection(URL_TO_DATABASE, USERNAME, PASSWORD);
             } catch (SQLException ex) {
                 System.out.println("Failed to create the database connection.");
             }
@@ -26,9 +27,9 @@ public class ConnectionDB {
 
     public static Connection getConnectionMysql() {
         try {
-            Class.forName(driverName);
+            Class.forName(DRIVER_NAME);
             try {
-                conn = DriverManager.getConnection(urlMysql, username, password);
+                conn = DriverManager.getConnection(URL_TO_LOCALHOST, USERNAME, PASSWORD);
             } catch (SQLException ex) {
                 System.out.println("Failed to create the database connection.");
             }
