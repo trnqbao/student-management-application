@@ -41,6 +41,7 @@ public class Students extends javax.swing.JInternalFrame {
 
         btnDelete.setEnabled(false);
         btnUpdate.setEnabled(false);
+        btnCancel.setEnabled(false);
     }
 
     public Students(String role) {
@@ -56,6 +57,7 @@ public class Students extends javax.swing.JInternalFrame {
 
         btnDelete.setEnabled(false);
         btnUpdate.setEnabled(false);
+        btnCancel.setEnabled(false);
     }
 
     DefaultTableModel dtm;
@@ -101,7 +103,7 @@ public class Students extends javax.swing.JInternalFrame {
         jPanel40 = new javax.swing.JPanel();
         btnSortByName = new javax.swing.JButton();
         jPanel44 = new javax.swing.JPanel();
-        btnSortByYear = new javax.swing.JButton();
+        btnSortByDate = new javax.swing.JButton();
         jPanel45 = new javax.swing.JPanel();
         btnSortByGrade = new javax.swing.JButton();
         jPanel35 = new javax.swing.JPanel();
@@ -250,14 +252,14 @@ public class Students extends javax.swing.JInternalFrame {
 
         jPanel44.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnSortByYear.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        btnSortByYear.setText("Sort By Year");
-        btnSortByYear.addActionListener(new java.awt.event.ActionListener() {
+        btnSortByDate.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnSortByDate.setText("Sort By Date");
+        btnSortByDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSortByYearActionPerformed(evt);
+                btnSortByDateActionPerformed(evt);
             }
         });
-        jPanel44.add(btnSortByYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 30));
+        jPanel44.add(btnSortByDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 30));
 
         jPanel26.add(jPanel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 120, 50));
 
@@ -367,7 +369,6 @@ public class Students extends javax.swing.JInternalFrame {
         jPanel29.setBackground(new java.awt.Color(242, 242, 242));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Student Management");
 
@@ -632,6 +633,7 @@ public class Students extends javax.swing.JInternalFrame {
         btnAdd.setEnabled(false);
         btnDelete.setEnabled(true);
         btnUpdate.setEnabled(true);
+        btnCancel.setEnabled(true);
     }//GEN-LAST:event_listStudentMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -719,6 +721,7 @@ public class Students extends javax.swing.JInternalFrame {
             btnAdd.setEnabled(true);
             btnDelete.setEnabled(false);
             btnUpdate.setEnabled(false);
+            btnCancel.setEnabled(false);
             txtName.setText("");
             txtGender.setSelectedItem(-1);
             txtPhone.setText("");
@@ -745,6 +748,7 @@ public class Students extends javax.swing.JInternalFrame {
             btnAdd.setEnabled(true);
             btnDelete.setEnabled(false);
             btnUpdate.setEnabled(false);
+            btnCancel.setEnabled(false);
             txtName.setText("");
 
             txtGender.setSelectedItem(-1);
@@ -758,6 +762,19 @@ public class Students extends javax.swing.JInternalFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        btnAdd.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnUpdate.setEnabled(false);
+        btnCancel.setEnabled(false);
+        txtName.setText("");
+
+        txtGender.setSelectedItem(-1);
+        txtPhone.setText("");
+        txtAddress.setText("");
+        txtGrade.setSelectedIndex(0);
+        txtCertificate1.setSelectedIndex(0);
+        getStudents();
+
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneActionPerformed
@@ -773,11 +790,15 @@ public class Students extends javax.swing.JInternalFrame {
         String name = searchStudentName.getText();
         String phone = searchStudentPhone.getText();
 
-        if (name.equals("")) {
-            JOptionPane.showMessageDialog(this, "Invalid name");
-            searchStudentName.requestFocus();
-        } else if (phone.equals("") || !phone.chars().allMatch(Character::isDigit)) {
-            JOptionPane.showMessageDialog(this, "Invalid phone");
+        if (name.equals("") || phone.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please provide information");
+            if (name.equals("")) {
+                searchStudentName.requestFocus();
+            } else {
+                searchStudentPhone.requestFocus();
+            }
+        } else if (!phone.chars().allMatch(Character::isDigit)) {
+            JOptionPane.showMessageDialog(this, "Phone must not contain character");
             searchStudentPhone.requestFocus();
         } else {
             Student student = studentController.showExistedStudent(name, phone);
@@ -798,9 +819,7 @@ public class Students extends javax.swing.JInternalFrame {
             } else {
                 dtm = (DefaultTableModel) listStudent.getModel();
                 dtm.setRowCount(0);
-                JOptionPane.showMessageDialog(this, "Invalid student");
-                txtName.requestFocus();
-//                studentController.showStudents(listStudent, dtm);
+                JOptionPane.showMessageDialog(this, "Invalid student infomation");
             }
         }
 
@@ -808,7 +827,8 @@ public class Students extends javax.swing.JInternalFrame {
 
     private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed
         // TODO add your handling code here:
-        studentController.showStudents(listStudent, dtm);
+        getStudents();
+
     }//GEN-LAST:event_btnViewAllActionPerformed
 
     private void btnSortByGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortByGradeActionPerformed
@@ -821,10 +841,10 @@ public class Students extends javax.swing.JInternalFrame {
         studentController.sortByName(listStudent, dtm);
     }//GEN-LAST:event_btnSortByNameActionPerformed
 
-    private void btnSortByYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortByYearActionPerformed
+    private void btnSortByDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortByDateActionPerformed
         // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnSortByYearActionPerformed
+        studentController.sortByDate(listStudent, dtm);
+    }//GEN-LAST:event_btnSortByDateActionPerformed
 
     private void btnSortByCertificateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortByCertificateActionPerformed
         // TODO add your handling code here:
@@ -838,9 +858,9 @@ public class Students extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSortByCertificate;
+    private javax.swing.JButton btnSortByDate;
     private javax.swing.JButton btnSortByGrade;
     private javax.swing.JButton btnSortByName;
-    private javax.swing.JButton btnSortByYear;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnViewAll;
     private javax.swing.JPanel crud;

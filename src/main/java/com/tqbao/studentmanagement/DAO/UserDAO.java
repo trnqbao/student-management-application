@@ -61,10 +61,12 @@ public class UserDAO implements Repository<User, Integer> {
 	}
 	private void createDB() {
 		try (Connection conn = ConnectionDB.getConnectionMysql()) {
+
 			Statement stm = (Statement) conn.createStatement();
 			stm.executeUpdate(CREATE_DB_SQL);
 			conn.close();
 			stm.close();
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

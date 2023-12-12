@@ -55,7 +55,7 @@ public class CertificateDAO implements Repository<Certificate, Integer> {
             pstm.setString(1, item.getName());
             int row = pstm.executeUpdate();
             if (row == 1) {
-                System.out.println(item.getName() + "has been added");
+                System.out.println(item.getName() + " has been added");
             }
             conn.close();
             pstm.close();

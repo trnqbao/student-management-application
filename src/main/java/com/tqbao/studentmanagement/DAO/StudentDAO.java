@@ -22,6 +22,7 @@ public class StudentDAO implements Repository<Student, Integer> {
     private static final String DELETE_STUDENT = "delete from student where id=?";
     private static final String SORT_BY_GRADE = "select * from student order by grade";
     private static final String SORT_BY_NAME = "select * from student order by name";
+    private static final String SORT_BY_DATE = "select * from student order by birthday";
     private static final String SORT_BY_CERTIFICATE = "select * from student order by certificate";
     private static final String CREATE_TABLE_STUDENT = "CREATE TABLE IF NOT EXISTS student("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
@@ -334,6 +335,37 @@ public class StudentDAO implements Repository<Student, Integer> {
         int c;
         try (Connection conn = ConnectionDB.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(SORT_BY_CERTIFICATE);
+            ResultSet rs = pstm.executeQuery();
+
+            ResultSetMetaData rsd = rs.getMetaData();
+            c = rsd.getColumnCount();
+            dtm = (DefaultTableModel) jTable.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector vector = new Vector();
+                for (int i = 0; i < c; i++) {
+                    vector.add(rs.getInt("id"));
+                    vector.add(rs.getString("name"));
+                    vector.add(rs.getDate("birthday"));
+                    vector.add(rs.getString("gender"));
+                    vector.add(rs.getString("phone"));
+                    vector.add(rs.getString("address"));
+                    vector.add(rs.getString("grade"));
+                    vector.add(rs.getString("certificate"));
+                }
+                dtm.addRow(vector);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void sortByDate(JTable jTable, DefaultTableModel dtm) {
+        int c;
+        try (Connection conn = ConnectionDB.getConnection()) {
+            PreparedStatement pstm = conn.prepareStatement(SORT_BY_DATE);
             ResultSet rs = pstm.executeQuery();
 
             ResultSetMetaData rsd = rs.getMetaData();

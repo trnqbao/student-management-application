@@ -7,7 +7,10 @@ package com.tqbao.studentmanagement.View.AccountManagement;
 
 import com.tqbao.studentmanagement.Controller.UserController;
 import static com.tqbao.studentmanagement.View.AccountManagement.Login.user;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  * @author tqbao
@@ -21,12 +24,15 @@ public class ChangePassword extends javax.swing.JFrame {
     UserController userController = new UserController();
     public ChangePassword() {
         initComponents();
+        this.setDefaultCloseOperation(0);
         this.setResizable(false);
         txtUsername.setEditable(false);
         txtUsername.setText(user.getUsername());
         txtNewPassword.requestFocus();
         
     }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

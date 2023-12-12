@@ -676,6 +676,7 @@ public class Users extends javax.swing.JInternalFrame {
         txtAge.setText("");
         txtStatus.setSelectedIndex(0);
         txtRole.setSelectedIndex(1);
+        getUsers();
     }//GEN-LAST:event_btnCancelActionPerformed
 
 

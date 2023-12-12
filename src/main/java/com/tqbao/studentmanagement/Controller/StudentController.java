@@ -34,9 +34,9 @@ public class StudentController {
         studentDAO.showStudents(jTable, dtm);
     }
 
-    public void showExistedStudent(String name, String phone, JTable jTable, DefaultTableModel dtm) {
-        studentDAO.showExistedStudent(name, phone, jTable, dtm);
-    }
+//    public void showExistedStudent(String name, String phone, JTable jTable, DefaultTableModel dtm) {
+//        studentDAO.showExistedStudent(name, phone, jTable, dtm);
+//    }
 
     public Student showExistedStudent(String name, String phone) {
         return studentDAO.showExistedStudent(name, phone);
@@ -59,5 +59,8 @@ public class StudentController {
     }
     public void sortByCertificate(JTable jTable, DefaultTableModel dtm){
         studentDAO.sortByCertificate(jTable, dtm);
+    }
+    public void sortByDate(JTable jTable, DefaultTableModel dtm) {
+        studentDAO.sortByDate(jTable, dtm);
     }
 }
