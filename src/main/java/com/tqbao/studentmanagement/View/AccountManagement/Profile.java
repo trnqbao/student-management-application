@@ -502,5 +502,6 @@ public class Profile extends javax.swing.JInternalFrame {
     private javax.swing.JLabel profile_phone;
     private javax.swing.JLabel profile_role;
     private javax.swing.JLabel profile_username;
+
     // End of variables declaration//GEN-END:variables
 }
