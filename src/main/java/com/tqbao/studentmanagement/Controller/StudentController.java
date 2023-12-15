@@ -5,7 +5,6 @@ import com.tqbao.studentmanagement.Model.Student;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.ResultSet;
 import java.util.List;
 
 public class StudentController {
@@ -33,10 +32,6 @@ public class StudentController {
     public void showStudents(JTable jTable, DefaultTableModel dtm) {
         studentDAO.showStudents(jTable, dtm);
     }
-
-//    public void showExistedStudent(String name, String phone, JTable jTable, DefaultTableModel dtm) {
-//        studentDAO.showExistedStudent(name, phone, jTable, dtm);
-//    }
 
     public Student showExistedStudent(String name, String phone) {
         return studentDAO.showExistedStudent(name, phone);

@@ -9,7 +9,6 @@ import com.tqbao.studentmanagement.Controller.UserController;
 import static com.tqbao.studentmanagement.View.AccountManagement.Login.user;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  *

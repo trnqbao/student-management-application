@@ -7,7 +7,6 @@ package com.tqbao.studentmanagement.View.AccountManagement;
 
 import com.tqbao.studentmanagement.View.Certificate.Certificates;
 import com.tqbao.studentmanagement.View.StudentManagement.Students;
-import com.tqbao.studentmanagement.View.StudentManagement.Students;
 
 import javax.swing.*;
 import java.awt.Color;

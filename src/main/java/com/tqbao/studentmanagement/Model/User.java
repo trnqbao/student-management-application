@@ -1,8 +1,5 @@
 package com.tqbao.studentmanagement.Model;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class User {
 
     private int id;

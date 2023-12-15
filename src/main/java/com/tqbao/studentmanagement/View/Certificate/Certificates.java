@@ -6,19 +6,10 @@
 package com.tqbao.studentmanagement.View.Certificate;
 
 import com.tqbao.studentmanagement.Controller.CertificateController;
-import com.tqbao.studentmanagement.DAO.ConnectionDB;
 import com.tqbao.studentmanagement.Model.Certificate;
-import com.tqbao.studentmanagement.Model.User;
-import com.tqbao.studentmanagement.View.AccountManagement.Dashboard;
-
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import java.sql.*;
-import java.util.Objects;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

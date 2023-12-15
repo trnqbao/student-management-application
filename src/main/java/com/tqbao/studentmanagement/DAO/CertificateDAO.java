@@ -1,7 +1,6 @@
 package com.tqbao.studentmanagement.DAO;
 
 import com.tqbao.studentmanagement.Model.Certificate;
-import com.tqbao.studentmanagement.Model.User;
 import com.tqbao.studentmanagement.View.AccountManagement.Dashboard;
 
 import javax.swing.*;
@@ -17,13 +16,10 @@ public class CertificateDAO implements Repository<Certificate, Integer> {
     private static final String CREATE_TABLE_CERTIFICATE = "CREATE TABLE IF NOT EXISTS certificate("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "name VARCHAR(255))";
-
     public static final String GET_ALL_CERTIFICATE = "select * from certificate";
     private static final String SELECT_CERTIFICATE = "select * from certificate where id=?";
-
     private static final String CHECK_CERTIFICATE_IF_EXISTS = "select * from certificate where name=?";
     private static final String INSERT_CERTIFICATE = "insert into certificate(name) values(?)";
-//    private static final String INSERT_NULL_CERTIFICATE = "insert into certificate(name) values(\"Null\")";
     private static final String UPDATE_CERTIFICATE = "update certificate set name=? where id=?";
     private static final String DELETE_CERTIFICATE = "delete from certificate where id=?";
 
@@ -35,12 +31,6 @@ public class CertificateDAO implements Repository<Certificate, Integer> {
         try (Connection conn = ConnectionDB.getConnection()) {
             Statement stm = (Statement) conn.createStatement();
             stm.executeUpdate(CREATE_TABLE_CERTIFICATE);
-//            stm.executeUpdate(INSERT_NULL_CERTIFICATE);
-
-//            Certificate certificate = read(1);
-//            if (certificate == null) {
-//                stm.executeUpdate(INSERT_NULL_CERTIFICATE);
-//            }
             conn.close();
             stm.close();
         } catch (SQLException e) {

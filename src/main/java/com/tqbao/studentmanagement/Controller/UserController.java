@@ -5,7 +5,6 @@ import com.tqbao.studentmanagement.Model.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.ResultSet;
 import java.util.List;
 
 public class UserController  {
@@ -25,10 +24,6 @@ public class UserController  {
     public void showAllUsers(JTable jTable, DefaultTableModel dtm) {
         userDAO.showAllUsers(jTable, dtm);
     }
-
-//    public void showAdmin(JTable jTable, DefaultTableModel dtm) {
-//        userDAO.showAdmin(jTable, dtm);
-//    }
 
     public void showManager(JTable jTable, DefaultTableModel dtm) {
         userDAO.showManager(jTable, dtm);

@@ -5,23 +5,10 @@
  */
 package com.tqbao.studentmanagement.View.AccountManagement;
 
-import com.tqbao.studentmanagement.View.AccountManagement.Dashboard;
-import com.tqbao.studentmanagement.Controller.UserController;
-import com.tqbao.studentmanagement.DAO.ConnectionDB;
-import com.tqbao.studentmanagement.Model.User;
-import com.tqbao.studentmanagement.View.AccountManagement.Login;
-import static com.tqbao.studentmanagement.View.AccountManagement.Login.user;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import com.tqbao.studentmanagement.Controller.UserController;
+import com.tqbao.studentmanagement.Model.User;
 import java.util.Objects;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;

@@ -7,7 +7,6 @@ package com.tqbao.studentmanagement.View.AccountManagement;
 
 import com.tqbao.studentmanagement.Controller.UserController;
 import com.tqbao.studentmanagement.Model.User;
-import com.tqbao.studentmanagement.View.AccountManagement.ChangePassword;
 
 import static com.tqbao.studentmanagement.View.AccountManagement.Login.user;
 
