@@ -17,7 +17,9 @@ public class CertificateController {
     public void add(Certificate certificate) {
         certificateDAO.add(certificate);
     }
-
+    public Certificate get(int id) {
+        return certificateDAO.read(id);
+    }
     public Certificate get(String name) {
         return certificateDAO.read(name);
     }

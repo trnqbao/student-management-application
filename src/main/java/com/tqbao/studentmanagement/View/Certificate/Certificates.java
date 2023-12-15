@@ -315,15 +315,27 @@ public class Certificates extends javax.swing.JInternalFrame {
                 btnCancel.setEnabled(false);
                 txtName.setText("");
                 getCertificates();
-            } else if (checkedCertificate.getName().equals(name)) {
-                JOptionPane.showMessageDialog(this, "Nothing to change");
+            } else if (checkedCertificate.getName().equals(certificate.getName()) && checkedCertificate.getId() != certificate.getId()) {
+                JOptionPane.showMessageDialog(this, "Certificate has been existed");
+
                 btnAdd.setEnabled(true);
                 btnDelete.setEnabled(false);
                 btnUpdate.setEnabled(false);
                 btnCancel.setEnabled(false);
                 txtName.setText("");
                 getCertificates();
-            } else {
+
+            }  else if (checkedCertificate.getName().equals(certificate.getName()) && checkedCertificate.getId() == certificate.getId()) {
+                JOptionPane.showMessageDialog(this, "Nothing to change");
+
+                btnAdd.setEnabled(true);
+                btnDelete.setEnabled(false);
+                btnUpdate.setEnabled(false);
+                btnCancel.setEnabled(false);
+                txtName.setText("");
+                getCertificates();
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "Certificate has been existed");
                 txtName.requestFocus();
             }
