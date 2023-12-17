@@ -66,7 +66,4 @@ public class UserController  {
         return userDAO.read(phone);
     }
 
-
-
-
 }
