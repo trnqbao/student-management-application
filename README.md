@@ -1,4 +1,4 @@
-# Student Management - HK1(23-24)
+# Student Management Application / HK1(23-24)
 # Midterm Project | Java Technology | Java Swing | JDBC | MySQL
 
  Zip the project file
